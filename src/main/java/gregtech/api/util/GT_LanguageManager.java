@@ -30,7 +30,7 @@ public class GT_LanguageManager {
     //TODO implement 03f6c9e
 
     public static String addStringLocalization(String aKey, String aEnglish) {
-        return addStringLocalization(aKey, aEnglish, false);
+        return addStringLocalization(aKey, aEnglish, true);
     }
 
     public static String addStringLocalization(String aKey, String aEnglish, boolean aWriteIntoLangFile) {
