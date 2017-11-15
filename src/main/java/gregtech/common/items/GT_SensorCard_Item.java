@@ -26,9 +26,9 @@ public class GT_SensorCard_Item extends GT_Generic_Item {
         if (aStack != null) {
             NBTTagCompound tNBT = aStack.getTagCompound();
             if (tNBT == null) {
-                aList.add("Missing Coodinates!");
+                aList.add(trans(14, "Missing Coodinates!"));
             } else {
-                aList.add("Device at:");
+                aList.add(trans(15, "Device at:"));
                 aList.add(String.format("x: %d, y: %d, z: %d",
                         tNBT.getInteger("x"),
                         tNBT.getInteger("y"),

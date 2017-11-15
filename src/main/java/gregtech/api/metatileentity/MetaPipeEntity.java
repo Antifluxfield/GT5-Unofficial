@@ -92,10 +92,10 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
         GT_LanguageManager.addStringLocalization("gt.blockmachines." + mName + ".name", aRegionalName);
         mInventory = new ItemStack[aInvSlotCount];
 
-        if (GT.isClientSide()) {
+        /*if (GT.isClientSide()) {
             ItemStack tStack = new ItemStack(GregTech_API.sBlockMachines, 1, aID);
             tStack.getItem().addInformation(tStack, null, new ArrayList<>(), true);
-        }
+        }*/
     }
 
     /**

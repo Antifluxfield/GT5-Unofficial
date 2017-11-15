@@ -70,8 +70,7 @@ public class GT_Cover_FluidRegulator extends GT_CoverBehavior {
         if (aCoverVariable < (0 - mTransferRate)) {
             aCoverVariable = (0 - mTransferRate);
         }
-        GT_Utility.sendChatToPlayer(aPlayer,
-                "Pump speed: " + aCoverVariable + "L/tick " + aCoverVariable * 20 + "L/sec");
+        GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(54, "Pump speed: %dL/tick(%dL/sec)"), aCoverVariable, aCoverVariable * 20));
         return aCoverVariable;
     }
 
@@ -88,8 +87,7 @@ public class GT_Cover_FluidRegulator extends GT_CoverBehavior {
         if (aCoverVariable < (0 - mTransferRate)) {
             aCoverVariable = (0 - mTransferRate);
         }
-        GT_Utility.sendChatToPlayer(aPlayer,
-                "Pump speed: " + aCoverVariable + "L/tick " + aCoverVariable * 20 + "L/sec");
+        GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(54, "Pump speed: %dL/tick(%dL/sec)"), aCoverVariable, aCoverVariable * 20));
         aTileEntity.setCoverDataAtSide(aSide, aCoverVariable);
         return true;
     }

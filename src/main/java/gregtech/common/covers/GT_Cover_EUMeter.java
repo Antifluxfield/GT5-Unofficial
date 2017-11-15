@@ -94,18 +94,18 @@ public class GT_Cover_EUMeter
         aCoverVariable = (aCoverVariable + (aPlayer.isSneaking()? -1 : 1)) % 12;
         if(aCoverVariable <0){aCoverVariable = 11;}
         switch(aCoverVariable) {
-            case 0: GT_Utility.sendChatToPlayer(aPlayer, "Normal Universal Storage"); break;
-            case 1: GT_Utility.sendChatToPlayer(aPlayer, "Inverted Universal Storage"); break;
-            case 2: GT_Utility.sendChatToPlayer(aPlayer, "Normal Electricity Storage"); break;
-            case 3: GT_Utility.sendChatToPlayer(aPlayer, "Inverted Electricity Storage"); break;
-            case 4: GT_Utility.sendChatToPlayer(aPlayer, "Normal Steam Storage"); break;
-            case 5: GT_Utility.sendChatToPlayer(aPlayer, "Inverted Steam Storage"); break;
-            case 6: GT_Utility.sendChatToPlayer(aPlayer, "Normal Average Electric Input"); break;
-            case 7: GT_Utility.sendChatToPlayer(aPlayer, "Inverted Average Electric Input"); break;
-            case 8: GT_Utility.sendChatToPlayer(aPlayer, "Normal Average Electric Output"); break;
-            case 9: GT_Utility.sendChatToPlayer(aPlayer, "Inverted Average Electric Output"); break;
-            case 10: GT_Utility.sendChatToPlayer(aPlayer, "Normal Electricity Storage(Including Batteries)"); break;
-            case 11: GT_Utility.sendChatToPlayer(aPlayer, "Inverted Electricity Storage(Including Batteries)"); break;
+            case 0: GT_Utility.sendChatToPlayer(aPlayer, trans(63, "Normal") + trans(70, " Universal Storage")); break;
+            case 1: GT_Utility.sendChatToPlayer(aPlayer, trans(64, "Inverted") + trans(70, " Universal Storage")); break;
+            case 2: GT_Utility.sendChatToPlayer(aPlayer, trans(63, "Normal") + trans(71, " Electricity Storage")); break;
+            case 3: GT_Utility.sendChatToPlayer(aPlayer, trans(64, "Inverted") + trans(71, " Electricity Storage")); break;
+            case 4: GT_Utility.sendChatToPlayer(aPlayer, trans(63, "Normal") + trans(72, " Steam Storage")); break;
+            case 5: GT_Utility.sendChatToPlayer(aPlayer, trans(64, "Inverted") + trans(72, " Steam Storage")); break;
+            case 6: GT_Utility.sendChatToPlayer(aPlayer, trans(63, "Normal") + trans(73, " Average Electric Input")); break;
+            case 7: GT_Utility.sendChatToPlayer(aPlayer, trans(64, "Inverted") + trans(73, " Average Electric Input")); break;
+            case 8: GT_Utility.sendChatToPlayer(aPlayer, trans(63, "Normal") + trans(74, " Average Electric Output")); break;
+            case 9: GT_Utility.sendChatToPlayer(aPlayer, trans(64, "Inverted") + trans(74, " Average Electric Output")); break;
+            case 10: GT_Utility.sendChatToPlayer(aPlayer, trans(63, "Normal") + trans(71, " Electricity Storage") + trans(75, "(Including Batteries)")); break;
+            case 11: GT_Utility.sendChatToPlayer(aPlayer, trans(64, "Inverted") + trans(71, " Electricity Storage") + trans(75, "(Including Batteries)")); break;
         }
         return aCoverVariable;
     }

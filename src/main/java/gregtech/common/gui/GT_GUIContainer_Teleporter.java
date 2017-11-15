@@ -15,13 +15,13 @@ public class GT_GUIContainer_Teleporter
 
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        this.fontRendererObj.drawString("Teleporter", 46, 8, 16448255);
+        this.fontRendererObj.drawString(trans(132, "Teleporter"), 46, 8, 16448255);
         if (this.mContainer != null) {
             this.fontRendererObj.drawString("X: " + GT_Utility.parseNumberToString(((GT_Container_Teleporter) this.mContainer).mTargetX), 46, 16, 16448255);
             this.fontRendererObj.drawString("Y: " + GT_Utility.parseNumberToString(((GT_Container_Teleporter) this.mContainer).mTargetY), 46, 24, 16448255);
             this.fontRendererObj.drawString("Z: " + GT_Utility.parseNumberToString(((GT_Container_Teleporter) this.mContainer).mTargetZ), 46, 32, 16448255);
             if (((GT_Container_Teleporter) this.mContainer).mEgg > 0) {
-                this.fontRendererObj.drawString("Dim: " + GT_Utility.parseNumberToString(((GT_Container_Teleporter) this.mContainer).mTargetD), 46, 40, 16448255);
+                this.fontRendererObj.drawString(trans(133, "Dim: ") + GT_Utility.parseNumberToString(((GT_Container_Teleporter) this.mContainer).mTargetD), 46, 40, 16448255);
             }
         }
     }

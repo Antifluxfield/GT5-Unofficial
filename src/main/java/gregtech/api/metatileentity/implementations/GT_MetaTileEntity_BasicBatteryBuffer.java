@@ -34,13 +34,24 @@ public class   GT_MetaTileEntity_BasicBatteryBuffer extends GT_MetaTileEntity_Ti
         super(aID, aName, aNameRegional, aTier, aSlotCount, aDescription);
     }
 
+    public GT_MetaTileEntity_BasicBatteryBuffer(int aID, String aName, String aNameRegional, int aTier, String[] aDescription, int aSlotCount) {
+    	super(aID, aName, aNameRegional, aTier, aSlotCount, aDescription);
+    }
+
     public GT_MetaTileEntity_BasicBatteryBuffer(String aName, int aTier, String aDescription, ITexture[][][] aTextures, int aSlotCount) {
         super(aName, aTier, aSlotCount, aDescription, aTextures);
     }
 
+    public GT_MetaTileEntity_BasicBatteryBuffer(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures, int aSlotCount) {
+    	super(aName, aTier, aSlotCount, aDescription, aTextures);
+    }
+
     @Override
     public String[] getDescription() {
-        return new String[]{mDescription, mInventory.length + " Slots"};
+    	String[] desc = new String[mDescriptions.length + 1];
+    	System.arraycopy(mDescriptions, 0, desc, 0, mDescriptions.length);
+    	desc[mDescriptions.length] = mInventory.length + " Slots";
+    	return desc;
     }
 
     @Override
@@ -60,7 +71,7 @@ public class   GT_MetaTileEntity_BasicBatteryBuffer extends GT_MetaTileEntity_Ti
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_BasicBatteryBuffer(mName, mTier, mDescription, mTextures, mInventory.length);
+        return new GT_MetaTileEntity_BasicBatteryBuffer(mName, mTier, mDescriptions, mTextures, mInventory.length);
     }
 
     @Override
@@ -306,9 +317,13 @@ public class   GT_MetaTileEntity_BasicBatteryBuffer extends GT_MetaTileEntity_Ti
 
         return new String[]{
                 getLocalName(),
-                "Stored Items:",
+                trans(4, "Stored Items:"),
                 GT_Utility.formatNumbers(mStored) + " EU /",
-                GT_Utility.formatNumbers(mMax) + " EU"};
+                GT_Utility.formatNumbers(mMax) + " EU",
+                trans(23, "Average input:"),
+                getBaseMetaTileEntity().getAverageElectricInput()+"",
+                trans(24, "Average output:"),
+                getBaseMetaTileEntity().getAverageElectricOutput()+""};
     }
 
     @Override

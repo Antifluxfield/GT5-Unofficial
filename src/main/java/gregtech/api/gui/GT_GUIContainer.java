@@ -1,5 +1,6 @@
 package gregtech.api.gui;
 
+import gregtech.api.util.GT_LanguageManager;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.inventory.Container;
@@ -39,6 +40,10 @@ public class GT_GUIContainer extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
         mc.renderEngine.bindTexture(mGUIbackground);
+    }
+
+    public String trans(int aKey, String aEnglish) {
+        return GT_LanguageManager.addStringLocalization(String.format("Interaction_DESCRIPTION_Index_%03d", aKey), aEnglish, false);
     }
 
 }

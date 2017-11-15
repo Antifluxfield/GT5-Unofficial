@@ -6,6 +6,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.List;
 
@@ -50,7 +51,21 @@ public class GT_CoolantCell_Item
 
     public void addAdditionalToolTips(List aList, ItemStack aStack, EntityPlayer aPlayer) {
         super.addAdditionalToolTips(aList, aStack, aPlayer);
-        aList.add("Stored Heat: " + getHeatOfStack(aStack));
+        int rHeat = getHeatOfStack(aStack) * 10 / this.heatStorage;
+        TextFormatting color;
+        switch (rHeat) {
+        case 0: color = TextFormatting.BLUE; break;
+        case 1:
+        case 2: color = TextFormatting.GREEN; break;
+        case 3:
+        case 4:
+        case 5:
+        case 6: color = TextFormatting.YELLOW; break;
+        case 7:
+        case 8: color = TextFormatting.RED; break;
+        default: color = TextFormatting.DARK_RED; break;
+        }
+        aList.add(TextFormatting.WHITE + String.format(trans(0, "Stored Heat: %s"), "" + color + getHeatOfStack(aStack)));
         switch (getControlTagOfStack(aStack)) {
             case 1:
                 aList.add(I18n.format("ic2.reactoritem.heatwarning.line1"));

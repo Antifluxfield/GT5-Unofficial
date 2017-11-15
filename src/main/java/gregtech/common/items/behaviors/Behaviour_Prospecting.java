@@ -43,7 +43,7 @@ public class Behaviour_Prospecting extends Behaviour_None {
 
         ItemData tAssotiation = GT_OreDictUnificator.getAssociation(new ItemStack(block, 1, blockMeta));
         if ((tAssotiation != null) && (tAssotiation.mPrefix.toString().startsWith("ore"))) {
-            GT_Utility.sendChatToPlayer(aPlayer, "This is " + tAssotiation.mMaterial.mMaterial.mDefaultLocalName + " Ore.");
+            GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(97, "This is %s Ore."), tAssotiation.mMaterial.mMaterial.mLocalizedName));
             GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(1), 1.0F, -1.0F, blockPos);
             return true;
         }
@@ -66,28 +66,28 @@ public class Behaviour_Prospecting extends Behaviour_None {
                             BlockPos scanPos = blockPos.add(x, -(y + 1), z);
                             IBlockState scanState = aWorld.getBlockState(scanPos);
                             if(scanState.getBlock() == Blocks.LAVA || scanState.getBlock() == Blocks.FLOWING_LAVA) {
-                                GT_Utility.sendChatToPlayer(aPlayer, "There is Lava behind this Rock");
+                                GT_Utility.sendChatToPlayer(aPlayer, trans(98, "There is Lava behind this Rock"));
                                 breakIt = true;
                             } else if(scanState.getBlock() == Blocks.WATER || scanState.getBlock() == Blocks.FLOWING_WATER) {
-                                GT_Utility.sendChatToPlayer(aPlayer, "There is Water behind this Rock");
+                                GT_Utility.sendChatToPlayer(aPlayer, trans(99, "There is Water behind this Rock"));
                                 breakIt = true;
                             } else if(scanState.getBlock() instanceof IFluidBlock) {
-                                GT_Utility.sendChatToPlayer(aPlayer, "There is Fluid behind this Rock");
+                                GT_Utility.sendChatToPlayer(aPlayer, trans(100, "There is Fluid behind this Rock"));
                                 breakIt = true;
                             } else if(scanState.getBlock() == Blocks.AIR ||
                                     scanState.getBlock() == Blocks.MONSTER_EGG ||
                                     !GT_Utility.hasBlockHitBox(aWorld, scanPos)) {
-                                GT_Utility.sendChatToPlayer(aPlayer, "There is an Air Pocket behind this Rock.");
+                                GT_Utility.sendChatToPlayer(aPlayer, trans(101, "There is an Air Pocket behind this Rock."));
                                 breakIt = true;
                             } else if(scanState.getBlock() != block) {
-                                GT_Utility.sendChatToPlayer(aPlayer, "Material is changing behind this Rock.");
+                                GT_Utility.sendChatToPlayer(aPlayer, trans(102, "Material is changing behind this Rock."));
                                 breakIt = true;
                             }
                         }
                     }
                 }
 
-                GT_Utility.sendChatToPlayer(aPlayer, "No Ores found.");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(103, "No Ores found."));
             }
             return true;
         }

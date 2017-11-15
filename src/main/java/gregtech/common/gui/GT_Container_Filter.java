@@ -75,45 +75,45 @@ public class GT_Container_Filter
             if (aSlotIndex == 18) {
                 ((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bOutput = (!((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bOutput);
                 if (((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bOutput) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(13, "Emit Energy to Outputside"));
                 } else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(14, "Don't emit Energy"));
                 }
                 return null;
             }
             if (aSlotIndex == 19) {
                 ((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull = (!((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull);
                 if (((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Redstone if slots contain something");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(15, "Emit Redstone if no Slot is free"));
                 } else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Redstone");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(16, "Don't emit Redstone"));
                 }
                 return null;
             }
             if (aSlotIndex == 20) {
                 ((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bInvert = (!((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bInvert);
                 if (((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bInvert) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Invert Redstone");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(17, "Invert Redstone"));
                 } else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't invert Redstone");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(18, "Don't invert Redstone"));
                 }
                 return null;
             }
             if (aSlotIndex == 21) {
                 ((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bInvertFilter = (!((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bInvertFilter);
                 if (((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bInvertFilter) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Invert Filter");
+                    GT_Utility.sendChatToPlayer(aPlayer, trans(19, "Invert Filter"));
                 } else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't invert Filter");
+                    GT_Utility.sendChatToPlayer(aPlayer, trans(20, "Don't invert Filter"));
                 }
                 return null;
             }
             if (aSlotIndex == 22) {
                 ((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bIgnoreNBT = (!((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bIgnoreNBT);
                 if (((GT_MetaTileEntity_Filter) this.mTileEntity.getMetaTileEntity()).bIgnoreNBT) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Ignore NBT");
+                    GT_Utility.sendChatToPlayer(aPlayer, trans(21, "Ignore NBT"));
                 } else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "NBT has to match");
+                    GT_Utility.sendChatToPlayer(aPlayer, trans(22, "NBT has to match"));
                 }
                 return null;
             }

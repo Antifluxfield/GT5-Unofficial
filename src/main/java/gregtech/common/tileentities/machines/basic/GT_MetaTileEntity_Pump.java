@@ -41,16 +41,20 @@ public class GT_MetaTileEntity_Pump extends GT_MetaTileEntity_Hatch {
     public Block mPumpedBlock2 = null;
 
     public GT_MetaTileEntity_Pump(int aID, String aName, String aNameRegional, int aTier) {
-        super(aID, aName, aNameRegional, aTier, 3, "The best way of emptying Oceans!");
+        super(aID, aName, aNameRegional, aTier, 3, new String[]{"The best way to empty Oceans!", "Pumping Area: %%%" + ((10 * ((int) Math.pow(1.6, aTier))) * 2 + 1) + "%%%x%%%" + ((10 * ((int) Math.pow(1.6, aTier))) * 2 + 1)});
     }
 
     public GT_MetaTileEntity_Pump(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 3, aDescription, aTextures);
     }
 
+    public GT_MetaTileEntity_Pump(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, 3, aDescription, aTextures);
+    }
+
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_Pump(this.mName, this.mTier, this.mDescription, this.mTextures);
+        return new GT_MetaTileEntity_Pump(this.mName, this.mTier, this.mDescriptions, this.mTextures);
     }
 
     public void saveNBTData(NBTTagCompound aNBT) {

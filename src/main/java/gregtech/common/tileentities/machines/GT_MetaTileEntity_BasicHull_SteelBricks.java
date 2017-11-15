@@ -14,12 +14,20 @@ public class GT_MetaTileEntity_BasicHull_SteelBricks
         super(aID, aName, aNameRegional, aTier, aDescription);
     }
 
+    public GT_MetaTileEntity_BasicHull_SteelBricks(int aID, String aName, String aNameRegional, int aTier, String[] aDescription) {
+        super(aID, aName, aNameRegional, aTier, aDescription);
+    }
+
     public GT_MetaTileEntity_BasicHull_SteelBricks(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, aDescription, aTextures);
     }
 
+    public GT_MetaTileEntity_BasicHull_SteelBricks(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, aDescription, aTextures);
+    }
+
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_BasicHull_SteelBricks(this.mName, this.mTier, this.mDescription, this.mTextures);
+        return new GT_MetaTileEntity_BasicHull_SteelBricks(this.mName, this.mTier, this.mDescriptions, this.mTextures);
     }
 
     public ITexture[][][] getTextureSet(ITexture[] aTextures) {

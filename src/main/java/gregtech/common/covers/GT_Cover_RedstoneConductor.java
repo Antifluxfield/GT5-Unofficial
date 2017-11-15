@@ -2,6 +2,7 @@ package gregtech.common.covers;
 
 import gregtech.api.interfaces.tileentity.ICoverable;
 import gregtech.api.util.GT_CoverBehavior;
+import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fluids.Fluid;
@@ -21,13 +22,8 @@ public class GT_Cover_RedstoneConductor
         aCoverVariable = (aCoverVariable + (aPlayer.isSneaking()? -1 : 1)) % 7;
         if(aCoverVariable <0){aCoverVariable = 6;}
         switch (aCoverVariable) {
-            case 0: GT_Utility.sendChatToPlayer(aPlayer, "Conducts strongest Input"); break;
-            case 1: GT_Utility.sendChatToPlayer(aPlayer, "Conducts from bottom Input"); break;
-            case 2: GT_Utility.sendChatToPlayer(aPlayer, "Conducts from top Input"); break;
-            case 3: GT_Utility.sendChatToPlayer(aPlayer, "Conducts from north Input"); break;
-            case 4: GT_Utility.sendChatToPlayer(aPlayer, "Conducts from south Input"); break;
-            case 5: GT_Utility.sendChatToPlayer(aPlayer, "Conducts from west Input"); break;
-            case 6: GT_Utility.sendChatToPlayer(aPlayer, "Conducts from east Input"); break;
+            case 0: GT_Utility.sendChatToPlayer(aPlayer, trans(87, "Conducts strongest Input")); break;
+            default: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(88, "Conducts from %s Input"), GT_LanguageManager.getFaceSideName(aCoverVariable - 1))); break;
         }
         return aCoverVariable;
     }

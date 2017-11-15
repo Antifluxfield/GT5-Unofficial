@@ -63,18 +63,18 @@ public class GT_Cover_NeedMaintainance extends GT_CoverBehavior {
         aCoverVariable = (aCoverVariable + (aPlayer.isSneaking()? -1 : 1)) % 12;
         if(aCoverVariable <0){aCoverVariable = 11;}
         switch(aCoverVariable) {
-            case 0: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 1 Maintenance Needed"); break;
-            case 1: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 1 Maintenance Needed(inverted)"); break;
-            case 2: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 2 Maintenance Needed"); break;
-            case 3: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 2 Maintenance Needed(inverted)"); break;
-            case 4: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 3 Maintenance Needed"); break;
-            case 5: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 3 Maintenance Needed(inverted)"); break;
-            case 6: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 4 Maintenance Needed"); break;
-            case 7: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 4 Maintenance Needed(inverted)"); break;
-            case 8: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 5 Maintenance Needed"); break;
-            case 9: GT_Utility.sendChatToPlayer(aPlayer, "Emit if 5 Maintenance Needed(inverted)"); break;
-            case 10: GT_Utility.sendChatToPlayer(aPlayer, "Emit if rotor needs maintainance"); break;
-            case 11: GT_Utility.sendChatToPlayer(aPlayer, "Emit if rotor needs maintainance(inverted)"); break;
+            case 0: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 1)); break;
+            case 1: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 1) + trans(78, "(inverted)")); break;
+            case 2: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 2)); break;
+            case 3: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 2) + trans(78, "(inverted)")); break;
+            case 4: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 3)); break;
+            case 5: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 3) + trans(78, "(inverted)")); break;
+            case 6: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 4)); break;
+            case 7: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 4) + trans(78, "(inverted)")); break;
+            case 8: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 5)); break;
+            case 9: GT_Utility.sendChatToPlayer(aPlayer, String.format(trans(77, "Emit if %d Maintenance Needed"), 5) + trans(78, "(inverted)")); break;
+            case 10: GT_Utility.sendChatToPlayer(aPlayer, trans(79, "Emit if rotor needs maintainance")); break;
+            case 11: GT_Utility.sendChatToPlayer(aPlayer, trans(79, "Emit if rotor needs maintainance")+ trans(78, "(inverted)")); break;
         }
         return aCoverVariable;
     }

@@ -471,6 +471,7 @@ public abstract class GT_Proxy implements IGT_Mod, IGuiHandler, IFuelHandler {
                 break;
             }
         }
+        GT_LanguageManager.writePlaceholderStrings();
     }
 
     public static long tBits = GT_ModHandler.RecipeBits.DO_NOT_CHECK_FOR_COLLISIONS | GT_ModHandler.RecipeBits.BUFFERED | GT_ModHandler.RecipeBits.ONLY_ADD_IF_RESULT_IS_NOT_NULL | GT_ModHandler.RecipeBits.NOT_REMOVABLE;
@@ -1438,7 +1439,7 @@ public abstract class GT_Proxy implements IGT_Mod, IGuiHandler, IFuelHandler {
                 aEvent.player.setGameType(GameType.ADVENTURE);
                 aEvent.player.capabilities.allowEdit = false;
                 if (this.mAxeWhenAdventure) {
-                    GT_Utility.sendChatToPlayer(aEvent.player, "It's dangerous to go alone! Take this.");
+                    GT_Utility.sendChatToPlayer(aEvent.player, GT_Utility.trans(131, "It's dangerous to go alone! Take this."));
                     aEvent.player.worldObj.spawnEntityInWorld(new EntityItem(aEvent.player.worldObj, aEvent.player.posX, aEvent.player.posY,
                             aEvent.player.posZ, GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(GT_MetaGenerated_Tool_01.AXE, 1, Materials.Flint, Materials.Wood, null)));
                 }
@@ -1917,5 +1918,11 @@ public abstract class GT_Proxy implements IGT_Mod, IGuiHandler, IFuelHandler {
             this.mMaterial = aMaterial;
             this.mModID = ((aModID == null) || (aModID.equals("UNKNOWN")) ? null : aModID);
         }
+    }
+
+    @SubscribeEvent
+    public void onBlockEvent(BlockEvent event) {
+    	if (event.getWorld().getBlockState(event.getPos()).getBlock().getUnlocalizedName().equals("blockAlloyGlass"))
+    		GregTech_API.causeMachineUpdate(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
     }
 }

@@ -2,6 +2,7 @@ package gregtech.api.metatileentity.implementations;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.util.GT_Utility;
 
 import static gregtech.api.enums.GT_Values.GT;
 
@@ -14,7 +15,9 @@ public abstract class GT_MetaTileEntity_TieredMachineBlock extends MetaTileEntit
     /**
      * A simple Description.
      */
+    @Deprecated
     public final String mDescription;
+    public final String[] mDescriptions;
 
     /**
      * Contains all Textures used by this Block.
@@ -24,7 +27,19 @@ public abstract class GT_MetaTileEntity_TieredMachineBlock extends MetaTileEntit
     public GT_MetaTileEntity_TieredMachineBlock(int aID, String aName, String aNameRegional, int aTier, int aInvSlotCount, String aDescription, ITexture... aTextures) {
         super(aID, aName, aNameRegional, aInvSlotCount);
         mTier = (byte) Math.max(0, Math.min(aTier, 9));
-        mDescription = aDescription;
+        mDescriptions = aDescription == null ? new String[0] : new String[]{aDescription};
+        mDescription = mDescriptions.length > 0 ? mDescriptions[0] : "";
+
+        // must always be the last call!
+        if (GT.isClientSide()) mTextures = getTextureSet(aTextures);
+        else mTextures = null;
+    }
+
+    public GT_MetaTileEntity_TieredMachineBlock(int aID, String aName, String aNameRegional, int aTier, int aInvSlotCount, String[] aDescriptions, ITexture... aTextures) {
+    	super(aID, aName, aNameRegional, aInvSlotCount);
+        mTier = (byte) Math.max(0, Math.min(aTier, 9));
+        mDescriptions = aDescriptions == null ? new String[0] : aDescriptions;
+        mDescription = mDescriptions.length > 0 ? mDescriptions[0] : "";
 
         // must always be the last call!
         if (GT.isClientSide()) mTextures = getTextureSet(aTextures);
@@ -34,7 +49,16 @@ public abstract class GT_MetaTileEntity_TieredMachineBlock extends MetaTileEntit
     public GT_MetaTileEntity_TieredMachineBlock(String aName, int aTier, int aInvSlotCount, String aDescription, ITexture[][][] aTextures) {
         super(aName, aInvSlotCount);
         mTier = (byte) aTier;
-        mDescription = aDescription;
+        mDescriptions = aDescription == null ? new String[0] : new String[]{aDescription};
+        mDescription = mDescriptions.length > 0 ? mDescriptions[0] : "";
+        mTextures = aTextures;
+    }
+
+    public GT_MetaTileEntity_TieredMachineBlock(String aName, int aTier, int aInvSlotCount, String[] aDescriptions, ITexture[][][] aTextures) {
+    	super(aName, aInvSlotCount);
+    	mTier = (byte) aTier;
+    	mDescriptions = aDescriptions == null ? new String[0] : aDescriptions;
+        mDescription = mDescriptions.length > 0 ? mDescriptions[0] : "";
         mTextures = aTextures;
     }
 
@@ -55,7 +79,7 @@ public abstract class GT_MetaTileEntity_TieredMachineBlock extends MetaTileEntit
 
     @Override
     public String[] getDescription() {
-        return new String[]{mDescription};
+        return mDescriptions;
     }
 
     /**

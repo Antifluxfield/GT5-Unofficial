@@ -19,10 +19,14 @@ public class GT_MetaTileEntity_QuantumChest extends GT_MetaTileEntity_TieredMach
     public int mItemCount = 0;
     public ItemStack mItemStack = null;
     public GT_MetaTileEntity_QuantumChest(int aID, String aName, String aNameRegional, int aTier) {
-        super(aID, aName, aNameRegional, aTier, 3, "This Chest stores " + ((int) ((Math.pow(6, aTier)) * 270000)) + " Blocks");
+        super(aID, aName, aNameRegional, aTier, 3, "This Chest stores %%%" + ((int) ((Math.pow(6, aTier)) * 270000)) + "%%% Blocks");
     }
 
     public GT_MetaTileEntity_QuantumChest(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, 3, aDescription, aTextures);
+    }
+
+    public GT_MetaTileEntity_QuantumChest(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 3, aDescription, aTextures);
     }
 
@@ -48,7 +52,7 @@ public class GT_MetaTileEntity_QuantumChest extends GT_MetaTileEntity_TieredMach
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_QuantumChest(mName, mTier, mDescription, mTextures);
+        return new GT_MetaTileEntity_QuantumChest(mName, mTier, mDescriptions, mTextures);
     }
 
     @Override
@@ -182,15 +186,15 @@ public class GT_MetaTileEntity_QuantumChest extends GT_MetaTileEntity_TieredMach
 
         if (mItemStack == null) {
             return new String[]{
-                    "Quantum Chest",
-                    "Stored Items:",
-                    "No Items",
+            		getLocalName(),
+                    trans(4, "Stored Items:"),
+                    trans(10, "No Items"),
                     Integer.toString(0),
                     Integer.toString(getMaxItemCount())};
         }
         return new String[]{
-                "Quantum Chest",
-                "Stored Items:",
+        		getLocalName(),
+        		trans(4, "Stored Items:"),
                 mItemStack.getDisplayName(),
                 Integer.toString(mItemCount),
                 Integer.toString(getMaxItemCount())};

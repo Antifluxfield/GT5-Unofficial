@@ -50,10 +50,14 @@ public class GT_MetaTileEntity_Teleporter extends GT_MetaTileEntity_BasicTank {
     public boolean hasEgg = false;
 
     public GT_MetaTileEntity_Teleporter(int aID, String aName, String aNameRegional, int aTier) {
-        super(aID, aName, aNameRegional, aTier, 3, "Teleport long distances with this little device.");
+        super(aID, aName, aNameRegional, aTier, 3, new String[]{"Teleport long distances with this little device.", "Use a Dragon Egg or Nitrogen Plasma", "for Inter-dimensional transmission"});
     }
 
     public GT_MetaTileEntity_Teleporter(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, 3, aDescription, aTextures);
+    }
+
+    public GT_MetaTileEntity_Teleporter(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 3, aDescription, aTextures);
     }
 
@@ -150,7 +154,7 @@ public class GT_MetaTileEntity_Teleporter extends GT_MetaTileEntity_BasicTank {
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_Teleporter(this.mName, this.mTier, this.mDescription, this.mTextures);
+        return new GT_MetaTileEntity_Teleporter(this.mName, this.mTier, this.mDescriptions, this.mTextures);
     }
 
     @Override
@@ -160,7 +164,7 @@ public class GT_MetaTileEntity_Teleporter extends GT_MetaTileEntity_BasicTank {
 
 
     public String[] getInfoData() {
-        return new String[]{"Coordinates:", "X: " + this.mTargetX, "Y: " + this.mTargetY, "Z: " + this.mTargetZ, "Dimension: " + this.mTargetD};
+        return new String[]{trans(25, "Coordinates:"), "X: " + this.mTargetX, "Y: " + this.mTargetY, "Z: " + this.mTargetZ, trans(26, "Dimension: ") + this.mTargetD};
     }
 
     @Override

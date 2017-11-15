@@ -72,9 +72,9 @@ public class GT_Container_Regulator
             if (aSlotIndex == 27) {
                 ((GT_MetaTileEntity_Regulator) this.mTileEntity.getMetaTileEntity()).bOutput = (!((GT_MetaTileEntity_Regulator) this.mTileEntity.getMetaTileEntity()).bOutput);
                 if (((GT_MetaTileEntity_Regulator) this.mTileEntity.getMetaTileEntity()).bOutput) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(13, "Emit Energy to Outputside"));
                 } else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(14, "Don't emit Energy"));
                 }
                 return null;
             }

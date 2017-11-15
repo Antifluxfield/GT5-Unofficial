@@ -197,19 +197,21 @@ public abstract class GT_MetaBase_Item extends GT_Generic_Item implements ISpeci
 
     @Override
     public final void addInformation(ItemStack aStack, EntityPlayer aPlayer, List<String> aList, boolean aF3_H) {
-        String tKey = getUnlocalizedName(aStack) + ".tooltip", tString = GT_LanguageManager.getTranslation(tKey);
-        if (GT_Utility.isStringValid(tString) && !tKey.equals(tString)) aList.add(tString);
+        String tKey = getUnlocalizedName(aStack) + ".tooltip";
+        String[] tStrings = GT_LanguageManager.getTranslation(tKey).split("%/n%");
+        for (String tString : tStrings)
+        	if (GT_Utility.isStringValid(tString) && !tKey.equals(tString)) aList.add(tString);
 
         Long[] tStats = getElectricStats(aStack);
         if (tStats != null) {
             if (tStats[3] > 0) {
-                aList.add(TextFormatting.AQUA + "Contains " + GT_Utility.formatNumbers(tStats[3]) + " EU   Tier: " + (tStats[2] >= 0 ? tStats[2] : 0) + TextFormatting.GRAY);
+            	aList.add(TextFormatting.AQUA + String.format(trans(9, "Contains %s EU   Tier: %s"), GT_Utility.formatNumbers(tStats[3]), "" + (tStats[2] >= 0 ? tStats[2] : 0)) + TextFormatting.GRAY);
             } else {
                 long tCharge = getRealCharge(aStack);
                 if (tStats[3] == -2 && tCharge <= 0) {
-                    aList.add(TextFormatting.AQUA + "Empty. You should recycle it properly." + TextFormatting.GRAY);
+                	aList.add(TextFormatting.AQUA + trans(10, "Empty. You should recycle it properly.") + TextFormatting.GRAY);
                 } else {
-                    aList.add(String.valueOf(TextFormatting.AQUA) + GT_Utility.formatNumbers(tCharge) + " / " + GT_Utility.formatNumbers(Math.abs(tStats[0])) + " EU - Voltage: " + V[(int) (tStats[2] >= 0 ? tStats[2] < V.length ? tStats[2] : V.length - 1 : 1)] + TextFormatting.GRAY);
+                	aList.add(String.valueOf(TextFormatting.AQUA) + String.format(trans(11, "%s / %s EU - Voltage: %s"), GT_Utility.formatNumbers(tCharge), GT_Utility.formatNumbers(Math.abs(tStats[0])), "" + V[(int) (tStats[2] >= 0 ? tStats[2] < V.length ? tStats[2] : V.length - 1 : 1)]) + TextFormatting.GRAY);
                 }
             }
         }
@@ -217,8 +219,8 @@ public abstract class GT_MetaBase_Item extends GT_Generic_Item implements ISpeci
         tStats = getFluidContainerStats(aStack);
         if (tStats != null && tStats[0] > 0) {
             FluidStack tFluid = getFluidContent(aStack);
-            aList.add(TextFormatting.BLUE + ((tFluid == null ? "No Fluids Contained" : GT_Utility.getFluidName(tFluid, true))) + TextFormatting.GRAY);
-            aList.add(TextFormatting.BLUE + ((tFluid == null ? 0 : tFluid.amount) + "L / " + tStats[0] + "L") + TextFormatting.GRAY);
+            aList.add(TextFormatting.BLUE + ((tFluid == null ? trans(12, "No Fluids Contained") : GT_Utility.getFluidName(tFluid, true))) + TextFormatting.GRAY);
+            aList.add(TextFormatting.BLUE + String.format(trans(13, "%sL / %sL"), "" + (tFluid == null ? 0 : tFluid.amount), "" + tStats[0]) + TextFormatting.GRAY);
         }
 
         ArrayList<IItemBehaviour<GT_MetaBase_Item>> tList = mItemBehaviors.get((short) getDamage(aStack));

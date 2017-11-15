@@ -17,10 +17,19 @@ public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_Hatch {
     public byte mMode = 0;
 
     public GT_MetaTileEntity_Hatch_Output(int aID, String aName, String aNameRegional, int aTier) {
-        super(aID, aName, aNameRegional, aTier, 3, "Fluid Output for Multiblocks (" + 8000 * (aTier + 1) + "L) (Screwdriver for output type)");
+        super(aID, aName, aNameRegional, aTier, 3, new String[]{
+        		"Fluid Output for Multiblocks",
+        		"Capacity: %%%" + 8000 * (aTier + 1) + "%%%L",
+        		"Right click with screwdriver to restrict output",
+        		"Can be restricted to put out Items and/or Steam/No Steam/1 specific Fluid",
+        		"Restricted Output Hatches are given priority for Multiblock Fluid output"});
     }
 
     public GT_MetaTileEntity_Hatch_Output(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, 3, aDescription, aTextures);
+    }
+
+    public GT_MetaTileEntity_Hatch_Output(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 3, aDescription, aTextures);
     }
 
@@ -56,7 +65,7 @@ public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_Hatch {
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_Hatch_Output(mName, mTier, mDescription, mTextures);
+        return new GT_MetaTileEntity_Hatch_Output(mName, mTier, mDescriptions, mTextures);
     }
 
     @Override
@@ -151,28 +160,28 @@ public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_Hatch {
         mMode = (byte) ((mMode + 1) % 8);
         switch (mMode) {
             case 0:
-                GT_Utility.sendChatToPlayer(aPlayer, "Outputs Liquids, Steam and Items");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(37, "Outputs Liquids, Steam and Items"));
                 break;
             case 1:
-                GT_Utility.sendChatToPlayer(aPlayer, "Outputs Steam and Items");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(38, "Outputs Steam and Items"));
                 break;
             case 2:
-                GT_Utility.sendChatToPlayer(aPlayer, "Outputs Steam and Liquids");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(39, "Outputs Steam and Liquids"));
                 break;
             case 3:
-                GT_Utility.sendChatToPlayer(aPlayer, "Outputs Steam");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(40, "Outputs Steam"));
                 break;
             case 4:
-                GT_Utility.sendChatToPlayer(aPlayer, "Outputs Liquids and Items");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(41, "Outputs Liquids and Items"));
                 break;
             case 5:
-                GT_Utility.sendChatToPlayer(aPlayer, "Outputs only Items");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(42, "Outputs only Items"));
                 break;
             case 6:
-                GT_Utility.sendChatToPlayer(aPlayer, "Outputs only Liquids");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(43, "Outputs only Liquids"));
                 break;
             case 7:
-                GT_Utility.sendChatToPlayer(aPlayer, "Outputs nothing");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(44, "Outputs nothing"));
                 break;
         }
     }

@@ -579,6 +579,13 @@ public class GT_Recipe {
             GregTech_API.sFluidMappings.add(mRecipeFluidMap);
             GregTech_API.sItemStackMappings.add(mRecipeItemMap);
             GT_LanguageManager.addStringLocalization(mUnlocalizedName = aUnlocalizedName, aLocalName);
+            if (GT_Utility.isStringValid(mNEISpecialValuePre) || GT_Utility.isStringValid(mNEISpecialValuePost)) {
+            	GT_LanguageManager.addStringLocalization(mUnlocalizedName + ".special", mNEISpecialValuePre + "%d" + mNEISpecialValuePost);
+            }
+        }
+
+        public String getNEISpecialValueFormat() {
+        	return GT_LanguageManager.addStringLocalization(mUnlocalizedName + ".special", mNEISpecialValuePre + "%d" + mNEISpecialValuePost, false);
         }
 
         public GT_Recipe addRecipe(boolean aOptimize, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecial, int[] aOutputChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {

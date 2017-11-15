@@ -16,13 +16,21 @@ public class GT_MetaTileEntity_Charger extends GT_MetaTileEntity_BasicBatteryBuf
         super(aID, aName, aNameRegional, aTier, aDescription, aSlotCount);
     }
 
+    public GT_MetaTileEntity_Charger(int aID, String aName, String aNameRegional, int aTier, String[] aDescription, int aSlotCount) {
+        super(aID, aName, aNameRegional, aTier, aDescription, aSlotCount);
+    }
+
     public GT_MetaTileEntity_Charger(String aName, int aTier, String aDescription, ITexture[][][] aTextures, int aSlotCount) {
+        super(aName, aTier, aDescription, aTextures, aSlotCount);
+    }
+
+    public GT_MetaTileEntity_Charger(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures, int aSlotCount) {
         super(aName, aTier, aDescription, aTextures, aSlotCount);
     }
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_Charger(mName, mTier, mDescription, mTextures, mInventory.length);
+        return new GT_MetaTileEntity_Charger(mName, mTier, mDescriptions, mTextures, mInventory.length);
     }
 
     @Override

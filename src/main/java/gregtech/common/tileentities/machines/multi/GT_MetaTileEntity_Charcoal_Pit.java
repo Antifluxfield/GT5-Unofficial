@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class GT_MetaTileEntity_Charcoal_Pit extends GT_MetaTileEntity_MultiBlockBase {
 
+	public static final int BASE_POLLUTION = 5;
     private boolean running = false;
     private boolean p1, p2, p3, p4, p5, p6;
 
@@ -47,7 +48,8 @@ public class GT_MetaTileEntity_Charcoal_Pit extends GT_MetaTileEntity_MultiBlock
                 "11x1x11 of Bricks (Bottom layer only)",
                 "11x5x11 of Logs (Above bottom Brick layer)",
                 "Only grass/dirt can touch Log blocks",
-                "No air between logs allowed"};
+                "No air between logs allowed",
+                "Causes %%%" + BASE_POLLUTION * 20 + "%%% Pollution per second"};
     }
 
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, byte aSide, byte aFacing, byte aColorIndex, boolean aActive, boolean aRedstone) {
@@ -87,7 +89,7 @@ public class GT_MetaTileEntity_Charcoal_Pit extends GT_MetaTileEntity_MultiBlock
             this.mEfficiency = 10000;
             this.mEfficiencyIncrease = 10000;
             this.mMaxProgresstime = Math.max(1, this.mMaxProgresstime);
-            GT_Pollution.addPollution(new BlockPos(this.getBaseMetaTileEntity().getXCoord(), this.getBaseMetaTileEntity().getYCoord(), this.getBaseMetaTileEntity().getZCoord()), mMaxProgresstime*5);
+            GT_Pollution.addPollution(new BlockPos(this.getBaseMetaTileEntity().getXCoord(), this.getBaseMetaTileEntity().getYCoord(), this.getBaseMetaTileEntity().getZCoord()), mMaxProgresstime*BASE_POLLUTION);
             return true;
         } else {
             this.mEfficiency = 0;

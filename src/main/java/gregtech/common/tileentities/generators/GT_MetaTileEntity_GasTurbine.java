@@ -13,14 +13,21 @@ import gregtech.api.util.GT_Recipe;
 public class GT_MetaTileEntity_GasTurbine
         extends GT_MetaTileEntity_BasicGenerator {
 
+	public static final int BASE_POLLUTION = 1;
     public int mEfficiency;
 
     public GT_MetaTileEntity_GasTurbine(int aID, String aName, String aNameRegional, int aTier) {
-        super(aID, aName, aNameRegional, aTier, "Requires flammable Gasses", new ITexture[0]);
+        super(aID, aName, aNameRegional, aTier, new String[]{"Requires flammable Gasses",
+                "Causes %%%" + (int) (20 * BASE_POLLUTION * Math.pow(2, aTier - 1)) + "%%% Pollution per second"}, new ITexture[0]);
         onConfigLoad();
     }
 
     public GT_MetaTileEntity_GasTurbine(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, aDescription, aTextures);
+        onConfigLoad();
+    }
+
+    public GT_MetaTileEntity_GasTurbine(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, aDescription, aTextures);
         onConfigLoad();
     }
@@ -30,7 +37,7 @@ public class GT_MetaTileEntity_GasTurbine
     }
 
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_GasTurbine(this.mName, this.mTier, this.mDescription, this.mTextures);
+        return new GT_MetaTileEntity_GasTurbine(this.mName, this.mTier, this.mDescriptions, this.mTextures);
     }
 
     public GT_Recipe.GT_Recipe_Map getRecipes() {
@@ -92,6 +99,6 @@ public class GT_MetaTileEntity_GasTurbine
 
 	@Override
 	public int getPollution() {
-		return 5;
+		return (int) (20 * BASE_POLLUTION * Math.pow(2, mTier - 1));
 	}
 }

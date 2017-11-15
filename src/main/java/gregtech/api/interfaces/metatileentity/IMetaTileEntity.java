@@ -10,6 +10,8 @@ import gregtech.api.interfaces.tileentity.IGearEnergyTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.objects.GT_ItemStack;
 import gregtech.api.util.GT_Config;
+import gregtech.api.util.GT_LanguageManager;
+import gregtech.api.util.GT_Utility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -369,4 +371,12 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
      * The onCreated Function of the Item Class redirects here
      */
     public void onCreated(ItemStack aStack, World aWorld, EntityPlayer aPlayer);
+
+    default public void sendModeSwitchText(EntityPlayer aPlayer, boolean isAllowedToWork) {
+    	GT_Utility.sendChatToPlayer(aPlayer, isAllowedToWork ? trans(25, "Machine Processing: Enabled") : trans(26, "Machine Processing: Disabled"));
+    }
+
+    default public String trans(int aKey, String aEnglish) {
+        return GT_LanguageManager.addStringLocalization(String.format("Interaction_DESCRIPTION_Index_%03d", aKey), aEnglish, false);
+    }
 }

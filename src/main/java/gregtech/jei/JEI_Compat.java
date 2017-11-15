@@ -21,7 +21,8 @@ public class JEI_Compat {
     public static void hideItemUnsafe(ItemStack stack) {
         IJeiHelpers helpers = JEI_GT_Plugin.getJeiHelpers();
         if(helpers != null) {
-            helpers.getItemBlacklist().addItemToBlacklist(stack);
+            helpers.getIngredientBlacklist().addIngredientToBlacklist(stack);
+            //helpers.getItemBlacklist().addItemToBlacklist(stack);
         }
     }
 

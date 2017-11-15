@@ -21,11 +21,20 @@ import net.minecraft.util.math.BlockPos;
 
 public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_Boiler {
 
+	public static final int POLLUTION = 20;
+
     public GT_MetaTileEntity_Boiler_Bronze(int aID, String aName, String aNameRegional) {
-        super(aID, aName, aNameRegional, "An early way to get Steam Power");
+        super(aID, aName, aNameRegional, new String[]{
+                "An early way to get Steam Power",
+                "Produces 120L of Steam per second",
+                "Causes %%%" + POLLUTION + "%%% Pollution per second"});
     }
 
     public GT_MetaTileEntity_Boiler_Bronze(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, aDescription, aTextures);
+    }
+
+    public GT_MetaTileEntity_Boiler_Bronze(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, aDescription, aTextures);
     }
 
@@ -59,7 +68,7 @@ public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_Boiler {
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_Boiler_Bronze(this.mName, this.mTier, this.mDescription, this.mTextures);
+        return new GT_MetaTileEntity_Boiler_Bronze(this.mName, this.mTier, this.mDescriptions, this.mTextures);
     }
 
     @Override
@@ -148,7 +157,7 @@ public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_Boiler {
                 this.mTemperature += 1;
             }
             if(this.mProcessingEnergy>0 && (aTick % 20L == 0L)){
-            	GT_Pollution.addPollution(new BlockPos(getBaseMetaTileEntity().getWorldPos()), 20);
+            	GT_Pollution.addPollution(new BlockPos(getBaseMetaTileEntity().getWorldPos()), POLLUTION);
             }
             aBaseMetaTileEntity.setActive(this.mProcessingEnergy > 0);
         }

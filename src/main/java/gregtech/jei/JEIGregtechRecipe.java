@@ -1,5 +1,6 @@
 package gregtech.jei;
 
+import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import mezz.jei.Internal;
@@ -583,23 +584,22 @@ public class JEIGregtechRecipe implements IRecipeWrapper {
                     int outputChance = mRecipe.getOutputChance(inputIndex);
                     if(outputChance != 10000) {
                         float floatChance = (outputChance * 1F / 10000F) * 100F;
-                        String cutChance = String.format("%.2f", floatChance);
-                        tooltip.add("Chance: " + cutChance + "%");
+                        tooltip.add(String.format(trans(0, "Chance: %.2f%"), floatChance));
                     }
                     break;
                 case 0:
                     //it's input
                     if(mRecipe.getRepresentativeInput(inputIndex).stackSize == 0) {
-                        tooltip.add("Does not get consumed in the process");
+                        tooltip.add(trans(1, "Does not get consumed in the process"));
                     }
                     break;
             }
         });
 
         mFluids.addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
-            tooltip.add(TextFormatting.BLUE + "Amount: " + ingredient.amount + TextFormatting.GRAY);
-            tooltip.add(TextFormatting.RED + "Temperature: " + ingredient.getFluid().getTemperature() + " K" + TextFormatting.GRAY);
-            tooltip.add(TextFormatting.GREEN + "State: " + (ingredient.getFluid().isGaseous() ? "Gas" : "Liquid") + TextFormatting.GRAY);
+            tooltip.add(TextFormatting.BLUE + String.format(trans(2, "Amount: %d"), ingredient.amount) + TextFormatting.GRAY);
+            tooltip.add(TextFormatting.RED + String.format(trans(3, "Temperature: %d K"), ingredient.getFluid().getTemperature()) + TextFormatting.GRAY);
+            tooltip.add(TextFormatting.GREEN + (ingredient.getFluid().isGaseous() ? trans(4, "State: Gas") : trans(5, "State: Liquid")) + TextFormatting.GRAY);
         });
 
     }
@@ -638,21 +638,22 @@ public class JEIGregtechRecipe implements IRecipeWrapper {
         int tEUt = mRecipe.mEUt;
         int tDuration = mRecipe.mDuration;
         if (tEUt != 0) {
-            drawText(10, 73, "Total: " + tDuration * tEUt + " EU", -16777216);
-            drawText(10, 83, "Usage: " + tEUt + " EU/t", -16777216);
+            drawText(10, 73, String.format(trans(6, "Total: %d EU"), tDuration * tEUt), -16777216);
+            drawText(10, 83, String.format(trans(7, "Usage: %d EU/t"), tEUt), -16777216);
             if (this.mRecipeMap.mShowVoltageAmperageInNEI) {
-                drawText(10, 93, "Voltage: " + tEUt / this.mRecipeMap.mAmperage + " EU", -16777216);
-                drawText(10, 103, "Amperage: " + this.mRecipeMap.mAmperage, -16777216);
+                drawText(10, 93, String.format(trans(8, "Voltage: %d EU"), tEUt / this.mRecipeMap.mAmperage), -16777216);
+                drawText(10, 103, String.format(trans(9, "Amperage: %d"), this.mRecipeMap.mAmperage), -16777216);
             } else {
-                drawText(10, 93, "Voltage: unspecified", -16777216);
-                drawText(10, 103, "Amperage: unspecified", -16777216);
+                drawText(10, 93, trans(10, "Voltage: unspecified"), -16777216);
+                drawText(10, 103, trans(11, "Amperage: unspecified"), -16777216);
             }
         }
         if (tDuration > 0) {
-            drawText(10, 113, "Time: " + (tDuration < 20 ? "< 1" : Integer.valueOf(tDuration / 20)) + " secs", -16777216);
+        	float duration = (float) tDuration / 20.0f;
+            drawText(10, 113, String.format(trans(12, "Time: %.2f secs"), duration), -16777216);
         }
         if ((GT_Utility.isStringValid(this.mRecipeMap.mNEISpecialValuePre)) || (GT_Utility.isStringValid(this.mRecipeMap.mNEISpecialValuePost))) {
-            drawText(10, 123, this.mRecipeMap.mNEISpecialValuePre + mRecipe.mSpecialValue * this.mRecipeMap.mNEISpecialValueMultiplier + this.mRecipeMap.mNEISpecialValuePost, -16777216);
+            drawText(10, 123, String.format(mRecipeMap.getNEISpecialValueFormat(), mRecipe.mSpecialValue * this.mRecipeMap.mNEISpecialValueMultiplier), -16777216);
         }
 
     }
@@ -675,6 +676,10 @@ public class JEIGregtechRecipe implements IRecipeWrapper {
     @Override
     public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
         return false;
+    }
+
+    public String trans(int aKey, String aEnglish) {
+      return GT_LanguageManager.addStringLocalization(String.format("JEI_DESCRIPTION_Index_%03d", aKey), aEnglish, false);
     }
 
 }

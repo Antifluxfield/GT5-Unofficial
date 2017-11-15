@@ -28,6 +28,7 @@ import net.minecraft.util.EnumParticleTypes;
 
 public class GT_MetaTileEntity_BronzeBlastFurnace extends MetaTileEntity {
 
+	public static final int POLLUTION = 50;
     private static final ITexture[] FACING_SIDE = {new GT_RenderedTexture(Textures.BlockIcons.MACHINE_BRONZEPLATEDBRICKS)};
     private static final ITexture[] FACING_FRONT = {new GT_RenderedTexture(Textures.BlockIcons.MACHINE_BRONZEBLASTFURNACE)};
     private static final ITexture[] FACING_ACTIVE = {new GT_RenderedTexture(Textures.BlockIcons.MACHINE_BRONZEBLASTFURNACE_ACTIVE)};
@@ -51,7 +52,8 @@ public class GT_MetaTileEntity_BronzeBlastFurnace extends MetaTileEntity {
                 "Controller Block for the Bronze Blast Furnace",
                 "How to get your first Steel",
                 "Size(WxHxD): 3x4x3 (Hollow, with opening on top)",
-                "Bronze Plated Bricks for the rest (32 at least!)"};
+                "Built from 32 Bronze Plated Bricks",
+                "Causes %%%" + POLLUTION + "%%% Pollution per second"};
     }
 
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, byte aSide, byte aFacing, byte aColorIndex, boolean aActive, boolean aRedstone) {
@@ -211,7 +213,7 @@ public class GT_MetaTileEntity_BronzeBlastFurnace extends MetaTileEntity {
                 }
             }
             if(this.mMaxProgresstime>0 && (aTimer % 20L == 0L)){
-            	GT_Pollution.addPollution(getBaseMetaTileEntity().getWorldPos(), 50);
+            	GT_Pollution.addPollution(getBaseMetaTileEntity().getWorldPos(), POLLUTION);
             }
             
             aBaseMetaTileEntity.setActive((this.mMaxProgresstime > 0) && (this.mMachine));

@@ -14,6 +14,11 @@ public class GT_GUIContainer_4by4 extends GT_GUIContainerMetaTile_Machine {
         mName = aName;
     }
 
+    public GT_GUIContainer_4by4(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, GT_ContainerMetaTile_Machine aContainer, String aName, String aBackground) {
+        super(aContainer, RES_PATH_GUI + aBackground + "4by4.png");
+        mName = aName;
+    }
+
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRendererObj.drawString(mName, 8, 4, 4210752);

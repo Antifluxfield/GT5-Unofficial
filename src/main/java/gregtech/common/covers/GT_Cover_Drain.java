@@ -63,12 +63,12 @@ public class GT_Cover_Drain
         aCoverVariable = (aCoverVariable + (aPlayer.isSneaking()? -1 : 1)) % 6;
         if(aCoverVariable <0){aCoverVariable = 5;}
         switch(aCoverVariable) {
-            case 0: GT_Utility.sendChatToPlayer(aPlayer, "Import"); break;
-            case 1: GT_Utility.sendChatToPlayer(aPlayer, "Import (conditional)"); break;
-            case 2: GT_Utility.sendChatToPlayer(aPlayer, "Import (invert cond)"); break;
-            case 3: GT_Utility.sendChatToPlayer(aPlayer, "Keep Liquids Away"); break;
-            case 4: GT_Utility.sendChatToPlayer(aPlayer, "Keep Liquids Away (conditional)"); break;
-            case 5: GT_Utility.sendChatToPlayer(aPlayer, "Keep Liquids Away (invert cond)"); break;
+            case 0: GT_Utility.sendChatToPlayer(aPlayer, trans(58, "Import")); break;
+            case 1: GT_Utility.sendChatToPlayer(aPlayer, trans(58, "Import") + trans(59, " (conditional)")); break;
+            case 2: GT_Utility.sendChatToPlayer(aPlayer, trans(58, "Import") + trans(60, " (invert cond)")); break;
+            case 3: GT_Utility.sendChatToPlayer(aPlayer, trans(67, "Keep Liquids Away")); break;
+            case 4: GT_Utility.sendChatToPlayer(aPlayer, trans(67, "Keep Liquids Away") + trans(59, " (conditional)")); break;
+            case 5: GT_Utility.sendChatToPlayer(aPlayer, trans(67, "Keep Liquids Away") + trans(60, " (invert cond)")); break;
         }
         return aCoverVariable;
     }

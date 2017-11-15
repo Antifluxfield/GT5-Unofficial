@@ -37,18 +37,21 @@ public class GT_MetaTileEntity_DieselEngine extends GT_MetaTileEntity_MultiBlock
 
     public String[] getDescription() {
         return new String[]{
-                "Controller Block for the Large Diesel Engine",
+        		"Controller Block for the Large Diesel Engine",
                 "Size(WxHxD): 3x3x4, Controller (front centered)",
-                "3x3x4 of Stable Titanium Casing (hollow, Min 16!)",
-                "2x Titanium Gear Box Casing inside the Hollow Casing",
-                "8x Engine Intake Casings (around controller)",
-                "2x Input Hatch (one of the Casings next to a Gear Box)",
+                "3x3x4 of Stable Titanium Machine Casing (hollow, Min 16!)",
+                "2x Titanium Gear Box Machine Casing inside the Hollow Casing",
+                "8x Engine Intake Machine Casing (around controller)",
+                "2x Input Hatch (Fuel/Lubricant) (one of the Casings next to a Gear Box)",
                 "1x Maintenance Hatch (one of the Casings next to a Gear Box)",
                 "1x Muffler Hatch (top middle back, next to the rear Gear Box)",
                 "1x Dynamo Hatch (back centered)",
-                "Engine Intake Casings not obstructed in front (only air blocks)",
-                "Supply Diesel Fuel and Lubricant to run. Supply Oxygen to boost output (optional).",
-                "2048EU/t default output, 6144EU/t boosted output"};
+                "Engine Intake Casings must not be obstructed in front (only air blocks)",
+                "Supply Diesel Fuel and 1000L of Lubricant per hour to run.",
+                "Supply 40L of Oxygen per second to boost output (optional).",
+                "Default: Produces 2048EU/t at 100% efficiency",
+                "Boosted: Produces 6144EU/t at 150% efficiency",
+                "Causes %%%" + 20 * getPollutionPerTick(null) + "%%% Pollution per second"};
     }
 
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, byte aSide, byte aFacing, byte aColorIndex, boolean aActive, boolean aRedstone) {
@@ -232,12 +235,12 @@ public class GT_MetaTileEntity_DieselEngine extends GT_MetaTileEntity_MultiBlock
     @Override
     public String[] getInfoData() {
         return new String[]{
-            "Diesel Engine",
-            "Current Output: "+mEUt*mEfficiency/10000 +" EU/t",
-            "Fuel Consumption: "+fuelConsumption+"L/t",
-            "Fuel Value: "+fuelValue+" EU/L",
-            "Fuel Remaining: "+fuelRemaining+" Litres",
-            "Current Efficiency: "+(mEfficiency/100)+"%"};
+        	getLocalName(),
+            String.format(trans2(5, "Current Output: %d EU/t"), mEUt*mEfficiency/10000),
+            String.format(trans2(6, "Fuel Consumption: %d L/t"), fuelConsumption),
+            String.format(trans2(7, "Fuel Value: %d EU/L"), fuelValue),
+            String.format(trans2(8, "Fuel Remaining: %d L"), fuelRemaining),
+            String.format(trans2(9, "Current Efficiency: %d%"), mEfficiency/100)};
     }
 
     @Override

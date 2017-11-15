@@ -13,10 +13,14 @@ import net.minecraft.util.EnumHand;
 public class GT_MetaTileEntity_QuantumTank
         extends GT_MetaTileEntity_BasicTank {
     public GT_MetaTileEntity_QuantumTank(int aID, String aName, String aNameRegional, int aTier) {
-        super(aID, aName, aNameRegional, aTier, 3, "Stores " + ((int) (Math.pow(6, aTier) * 267000)) + "L of fluid");
+        super(aID, aName, aNameRegional, aTier, 3, "Stores %%%" + ((int) (Math.pow(6, aTier) * 267000)) + "%%%L of fluid");
     }
 
     public GT_MetaTileEntity_QuantumTank(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, 3, aDescription, aTextures);
+    }
+
+    public GT_MetaTileEntity_QuantumTank(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 3, aDescription, aTextures);
     }
 
@@ -102,18 +106,18 @@ public class GT_MetaTileEntity_QuantumTank
 
         if (mFluid == null) {
             return new String[]{
-                    "Quantum Tank",
-                    "Stored Fluid:",
-                    "No Fluid",
-                    Integer.toString(0) + "L",
-                    Integer.toString(getCapacity()) + "L"};
+            		getLocalName(),
+                    trans2(27, "Stored Fluid:"),
+                    trans2(28, "No Fluid"),
+                    Integer.toString(0) + trans(29, "L"),
+                    Integer.toString(getCapacity()) + trans(29, "L")};
         }
         return new String[]{
-                "Quantum Tank",
-                "Stored Fluid:",
+        		getLocalName(),
+        		trans2(27, "Stored Fluid:"),
                 mFluid.getLocalizedName(),
-                Integer.toString(mFluid.amount) + "L",
-                Integer.toString(getCapacity()) + "L"};
+                Integer.toString(mFluid.amount) + trans(29, "L"),
+                Integer.toString(getCapacity()) + trans(29, "L")};
     }
 
     @Override
@@ -123,7 +127,7 @@ public class GT_MetaTileEntity_QuantumTank
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_QuantumTank(mName, mTier, mDescription, mTextures);
+        return new GT_MetaTileEntity_QuantumTank(mName, mTier, mDescriptions, mTextures);
     }
 
     @Override

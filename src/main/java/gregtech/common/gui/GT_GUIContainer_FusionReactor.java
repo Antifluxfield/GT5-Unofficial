@@ -25,13 +25,13 @@ public class GT_GUIContainer_FusionReactor extends GT_GUIContainerMetaTile_Machi
 
         if (mContainer != null) {
             if ((((GT_Container_MultiMachine) mContainer).mDisplayErrorCode & 64) != 0)
-                fontRendererObj.drawString("Incomplete Structure.", 10, 8, 16448255);
+                fontRendererObj.drawString(trans(6, "Incomplete Structure."), 10, 8, 16448255);
 
             if (((GT_Container_MultiMachine) mContainer).mDisplayErrorCode == 0) {
                 if (((GT_Container_MultiMachine) mContainer).mActive == 0) {
-                    fontRendererObj.drawString("Hit with Soft Hammer to (re-)start the Machine if it doesn't start.", -70, 170, 16448255);
+                    fontRendererObj.drawString(trans(7, "Hit with Soft Hammer") +" " +trans(8, "to (re-)start the Machine") + " " + trans(9, "if it doesn't start."), -70, 170, 16448255);
                 } else {
-                    fontRendererObj.drawString("Running perfectly.", 10, 170, 16448255);
+                    fontRendererObj.drawString(trans(10, "Running perfectly."), 10, 170, 16448255);
                 }
             }
             fontRendererObj.drawString(GT_Utility.formatNumbers(this.mContainer.mEnergy) + " EU", 50, 155, 0x00ff0000);

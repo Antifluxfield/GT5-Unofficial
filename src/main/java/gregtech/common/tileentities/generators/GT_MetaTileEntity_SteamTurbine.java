@@ -17,11 +17,18 @@ public class GT_MetaTileEntity_SteamTurbine extends GT_MetaTileEntity_BasicGener
     public int mEfficiency;
 
     public GT_MetaTileEntity_SteamTurbine(int aID, String aName, String aNameRegional, int aTier) {
-        super(aID, aName, aNameRegional, aTier, "Requires Steam to run", new ITexture[0]);
+        super(aID, aName, aNameRegional, aTier, new String[]{
+                "Converts Steam into EU",
+                "Base rate: 2L of Steam -> 1 EU"}, new ITexture[0]);
         onConfigLoad();
     }
 
     public GT_MetaTileEntity_SteamTurbine(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, aDescription, aTextures);
+        onConfigLoad();
+    }
+
+    public GT_MetaTileEntity_SteamTurbine(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, aDescription, aTextures);
         onConfigLoad();
     }
@@ -31,7 +38,7 @@ public class GT_MetaTileEntity_SteamTurbine extends GT_MetaTileEntity_BasicGener
     }
 
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_SteamTurbine(this.mName, this.mTier, this.mDescription, this.mTextures);
+        return new GT_MetaTileEntity_SteamTurbine(this.mName, this.mTier, this.mDescriptions, this.mTextures);
     }
 
     public GT_Recipe.GT_Recipe_Map getRecipes() {
@@ -40,7 +47,11 @@ public class GT_MetaTileEntity_SteamTurbine extends GT_MetaTileEntity_BasicGener
 
     @Override
     public String[] getDescription() {
-        return new String[]{mDescription, "Fuel Efficiency: " + (600 / getEfficiency()) + "%"};
+    	String[] desc = new String[mDescriptions.length + 2];
+        System.arraycopy(mDescriptions, 0, desc, 0, mDescriptions.length);
+        desc[mDescriptions.length] = "Fuel Efficiency: %%%" + (600 / getEfficiency()) + "%";
+        desc[mDescriptions.length + 1] = "Consumes up to %%%" + (int) (4000 * (8 * Math.pow(4, mTier) + Math.pow(2, mTier)) / (600 / getEfficiency())) + "%%%L of Steam per second";
+        return desc;
     }
 
     public int getCapacity() {

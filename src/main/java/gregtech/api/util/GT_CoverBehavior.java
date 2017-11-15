@@ -221,4 +221,8 @@ public abstract class GT_CoverBehavior {
         aTileEntity.setCoverIDAtSide(aSide, aCoverID);
     }
 
+    public String trans(int aKey, String aEnglish) {
+    	return GT_LanguageManager.addStringLocalization(String.format("Interaction_DESCRIPTION_Index_%03d", aKey), aEnglish, false);
+    }
+
 }

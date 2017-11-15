@@ -39,10 +39,10 @@ public class GT_FluidDisplayItem extends GT_Generic_Item {
         if (aNBT != null) {
             long tToolTipAmount = aNBT.getLong("mFluidDisplayAmount");
             if (tToolTipAmount > 0L) {
-                aList.add(TextFormatting.BLUE + "Amount: " + tToolTipAmount + TextFormatting.GRAY);
+                aList.add(TextFormatting.BLUE + String.format(trans(16, "Amount: %d L"), tToolTipAmount) + TextFormatting.GRAY);
             }
-            aList.add(TextFormatting.RED + "Temperature: " + aNBT.getLong("mFluidDisplayHeat") + " K" + TextFormatting.GRAY);
-            aList.add(TextFormatting.GREEN + "State: " + (aNBT.getBoolean("mFluidState") ? "Gas" : "Liquid") + TextFormatting.GRAY);
+            aList.add(TextFormatting.RED + String.format(trans(17, "Temperature: %d K"), aNBT.getLong("mFluidDisplayHeat")) + TextFormatting.GRAY);
+            aList.add(TextFormatting.GREEN + (aNBT.getBoolean("mFluidState") ? trans(18, "State: Gas") : trans(19, "State: Liquid")) + TextFormatting.GRAY);
         }
     }
 

@@ -46,10 +46,26 @@ public class GT_MetaTileEntity_Hatch_Maintenance extends GT_MetaTileEntity_Hatch
         mAuto = aAuto;
     }
 
+    public GT_MetaTileEntity_Hatch_Maintenance(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures, boolean aAuto) {
+        super(aName, aTier, 1, aDescription, aTextures);
+        mAuto = aAuto;
+    }
+
     @Override
     public String[] getDescription() {
-        if(mAuto)return new String[]{mDescription,"4 Ducttape, 2 Lubricant Cells","4 Steel Screws, 2 Adv Circuits","For each autorepair"};
-        return new String[]{mDescription, "Cannot be shared between Multiblocks!"};
+    	if (mAuto) {
+            String[] desc = new String[mDescriptions.length + 3];
+            System.arraycopy(mDescriptions, 0, desc, 0, mDescriptions.length);
+            desc[mDescriptions.length] = "4 Ducttape, 2 Lubricant Cells";
+            desc[mDescriptions.length + 1] = "4 Steel Screws, 2 Adv Circuits";
+            desc[mDescriptions.length + 2] = "For each autorepair";
+            return desc;
+        } else {
+            String[] desc = new String[mDescriptions.length + 1];
+            System.arraycopy(mDescriptions, 0, desc, 0, mDescriptions.length);
+            desc[mDescriptions.length] = "Cannot be shared between Multiblocks!";
+            return desc;
+        }
     }
 
     @Override
@@ -89,8 +105,8 @@ public class GT_MetaTileEntity_Hatch_Maintenance extends GT_MetaTileEntity_Hatch
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        if(aTileEntity.getMetaTileID()==111) return new GT_MetaTileEntity_Hatch_Maintenance(mName, mTier, mDescription, mTextures, true);
-        return new GT_MetaTileEntity_Hatch_Maintenance(mName, mTier, mDescription, mTextures, false);
+        if(aTileEntity.getMetaTileID()==111) return new GT_MetaTileEntity_Hatch_Maintenance(mName, mTier, mDescriptions, mTextures, true);
+        return new GT_MetaTileEntity_Hatch_Maintenance(mName, mTier, mDescriptions, mTextures, false);
     }
 
     @Override

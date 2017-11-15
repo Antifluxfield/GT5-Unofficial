@@ -441,10 +441,10 @@ public abstract class GT_MetaTileEntity_FusionComputer extends GT_MetaTileEntity
         }
 
         return new String[]{
-                "Fusion Reactor MK "+tier,
-                "EU Required: "+powerRequired+"EU/t",
-                "Stored EU: "+mEUStore+" / "+maxEUStore(),
-                "Plasma Output: "+plasmaOut+"L/t"};
+        		getLocalName(),
+                String.format(trans2(11, "EU Required: %dEU/t"), powerRequired),
+                String.format(trans2(12, "Stored EU: %d / %d"), mEUStore, maxEUStore()),
+                String.format(trans2(13, "Plasma Output: %dL/t"), plasmaOut)};
     }
 
     @Override

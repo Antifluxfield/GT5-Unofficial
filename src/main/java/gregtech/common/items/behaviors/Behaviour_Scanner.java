@@ -18,14 +18,23 @@ import java.util.List;
 
 public class Behaviour_Scanner extends Behaviour_None {
 
-    public static final IItemBehaviour<GT_MetaBase_Item> INSTANCE = new Behaviour_Scanner();
-    private final String mTooltip = GT_LanguageManager.addStringLocalization("gt.behaviour.scanning", "Can scan Blocks in World");
+    public static final IItemBehaviour<GT_MetaBase_Item> INSTANCE = new Behaviour_Scanner(), DEBUG = new Behaviour_Scanner(true);
+    private static final String mTooltip = GT_LanguageManager.addStringLocalization("gt.behaviour.scanning", "Can scan Blocks in World");
+    private final boolean mDebug;
+
+    public Behaviour_Scanner() {
+    	mDebug = false;
+    }
+
+    public Behaviour_Scanner(boolean aDebug) {
+    	mDebug = aDebug;
+    }
 
     @Override
     public boolean onItemUseFirst(GT_MetaBase_Item aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         if (((aPlayer instanceof EntityPlayerMP)) && (aItem.canUse(aStack, 20000.0D))) {
             ArrayList<String> tList = new ArrayList<>();
-            if (aItem.use(aStack, GT_Utility.getCoordinateScan(tList, aPlayer, aWorld, 1, pos, side, hitX, hitY, hitZ), aPlayer)) {
+            if (aItem.use(aStack, GT_Utility.getCoordinateScan(tList, aPlayer, aWorld, 1, pos, side, hitX, hitY, hitZ, mDebug), aPlayer)) {
                 for (String aTList : tList) {
                     GT_Utility.sendChatToPlayer(aPlayer, aTList);
                 }

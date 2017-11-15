@@ -41,13 +41,13 @@ public class GT_Cover_ItemMeter extends GT_CoverBehavior {
         aCoverVariable = (aCoverVariable + (aPlayer.isSneaking() ? -1 : 1)) % (2 + aTileEntity.getSizeInventory());
         switch (aCoverVariable) {
             case 0:
-                GT_Utility.sendChatToPlayer(aPlayer, "Normal");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(63, "Normal"));
                 break;
             case 1:
-                GT_Utility.sendChatToPlayer(aPlayer, "Inverted");
+                GT_Utility.sendChatToPlayer(aPlayer, trans(64, "Inverted"));
                 break;
             default:
-                GT_Utility.sendChatToPlayer(aPlayer, "Slot: " + (aCoverVariable - 2));
+                GT_Utility.sendChatToPlayer(aPlayer, trans(55, "Slot #") + (aCoverVariable - 2));
                 break;
         }
         return aCoverVariable;

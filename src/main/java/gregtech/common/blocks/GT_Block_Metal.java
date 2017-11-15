@@ -24,7 +24,7 @@ public class GT_Block_Metal extends GT_Block_Storage {
         mBlockIcons = aBlockIcons;
         for (int i = 0; i < aMats.length; i++) {
             if (aMats[i].mMetaItemSubID > 0 && aMats[i].mHasParentMod) {
-                GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + i + ".name", "Block of " + aMats[i].mDefaultLocalName);
+                GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + i + ".name", "Block of %material");
                 GT_OreDictUnificator.registerOre(aPrefix, aMats[i], new ItemStack(this, 1, i));
             }
         }

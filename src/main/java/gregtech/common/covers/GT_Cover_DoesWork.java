@@ -31,10 +31,10 @@ public class GT_Cover_DoesWork
         aCoverVariable = (aCoverVariable + (aPlayer.isSneaking()? -1 : 1)) % 4;
         if(aCoverVariable <0){aCoverVariable = 3;}
         switch(aCoverVariable) {
-            case 0: GT_Utility.sendChatToPlayer(aPlayer, "Normal"); break;
-            case 1: GT_Utility.sendChatToPlayer(aPlayer, "Inverted"); break;
-            case 2: GT_Utility.sendChatToPlayer(aPlayer, "Ready to work"); break;
-            case 3: GT_Utility.sendChatToPlayer(aPlayer, "Not ready to work"); break;
+            case 0: GT_Utility.sendChatToPlayer(aPlayer, trans(63, "Normal")); break;
+            case 1: GT_Utility.sendChatToPlayer(aPlayer, trans(64, "Inverted")); break;
+            case 2: GT_Utility.sendChatToPlayer(aPlayer, trans(65, "Ready to work")); break;
+            case 3: GT_Utility.sendChatToPlayer(aPlayer, trans(66, "Not ready to work")); break;
         }
         return aCoverVariable;
     }

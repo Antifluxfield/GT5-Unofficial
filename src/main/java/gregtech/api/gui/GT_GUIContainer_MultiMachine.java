@@ -1,9 +1,11 @@
 package gregtech.api.gui;
 
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.items.GT_MetaGenerated_Tool_01;
+import gregtech.common.tileentities.machines.multi.GT_MetaTileEntity_LargeTurbine;
 import ic2.core.block.machine.BlockMiningPipe;
 import ic2.core.ref.BlockName;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -33,38 +35,38 @@ public class GT_GUIContainer_MultiMachine extends GT_GUIContainerMetaTile_Machin
 
         if (mContainer != null) {
             if ((((GT_Container_MultiMachine) mContainer).mDisplayErrorCode & 1) != 0)
-                fontRendererObj.drawString("Pipe is loose.", 10, 16, 16448255);
+                fontRendererObj.drawString(trans(0, "Pipe is loose."), 10, 16, 16448255);
             if ((((GT_Container_MultiMachine) mContainer).mDisplayErrorCode & 2) != 0)
-                fontRendererObj.drawString("Screws are missing.", 10, 24, 16448255);
+                fontRendererObj.drawString(trans(1,"Screws are missing."), 10, 24, 16448255);
             if ((((GT_Container_MultiMachine) mContainer).mDisplayErrorCode & 4) != 0)
-                fontRendererObj.drawString("Something is stuck.", 10, 32, 16448255);
+                fontRendererObj.drawString(trans(2,"Something is stuck."), 10, 32, 16448255);
             if ((((GT_Container_MultiMachine) mContainer).mDisplayErrorCode & 8) != 0)
-                fontRendererObj.drawString("Platings are dented.", 10, 40, 16448255);
+                fontRendererObj.drawString(trans(3, "Platings are dented."), 10, 40, 16448255);
             if ((((GT_Container_MultiMachine) mContainer).mDisplayErrorCode & 16) != 0)
-                fontRendererObj.drawString("Circuitry burned out.", 10, 48, 16448255);
+                fontRendererObj.drawString(trans(4, "Circuitry burned out."), 10, 48, 16448255);
             if ((((GT_Container_MultiMachine) mContainer).mDisplayErrorCode & 32) != 0)
-                fontRendererObj.drawString("That doesn't belong there.", 10, 56, 16448255);
+                fontRendererObj.drawString(trans(5, "That doesn't belong there."), 10, 56, 16448255);
             if ((((GT_Container_MultiMachine) mContainer).mDisplayErrorCode & 64) != 0)
-                fontRendererObj.drawString("Incomplete Structure.", 10, 64, 16448255);
+                fontRendererObj.drawString(trans(6, "Incomplete Structure."), 10, 64, 16448255);
 
             if (((GT_Container_MultiMachine) mContainer).mDisplayErrorCode == 0) {
                 if (((GT_Container_MultiMachine) mContainer).mActive == 0) {
-                    fontRendererObj.drawString("Hit with Soft Hammer", 10, 16, 16448255);
-                    fontRendererObj.drawString("to (re-)start the Machine", 10, 24, 16448255);
-                    fontRendererObj.drawString("if it doesn't start.", 10, 32, 16448255);
+                    fontRendererObj.drawString(trans(7, "Hit with Soft Hammer"), 10, 16, 16448255);
+                    fontRendererObj.drawString(trans(8, "to (re-)start the Machine"), 10, 24, 16448255);
+                    fontRendererObj.drawString(trans(9, "if it doesn't start."), 10, 32, 16448255);
                 } else {
-                    fontRendererObj.drawString("Running perfectly.", 10, 16, 16448255);
+                    fontRendererObj.drawString(trans(10, "Running perfectly."), 10, 16, 16448255);
                 }
                 	int id = mContainer.mTileEntity.getMetaTileID();
                    if(id == 1157 || id == 1158){
                     	ItemStack tItem = mContainer.mTileEntity.getMetaTileEntity().getStackInSlot(1);
                     	if(tItem==null || !GT_Utility.areStacksEqual(tItem, GT_ModHandler.getIC2Item(BlockName.mining_pipe, BlockMiningPipe.MiningPipeType.pipe, 1))){
-                    		fontRendererObj.drawString("Missing Mining Pipe", 10,((GT_Container_MultiMachine) mContainer).mActive == 0 ? 40 : 24, 16448255);
+                    		fontRendererObj.drawString(trans(11, "Missing Mining Pipe"), 10,((GT_Container_MultiMachine) mContainer).mActive == 0 ? 40 : 24, 16448255);
                     	}
-                    }else if(id == 1131 || id == 1151 || id == 1152 || id == 1153){
+                    }else if(mContainer.mTileEntity.getMetaTileEntity() instanceof GT_MetaTileEntity_LargeTurbine){
                     	ItemStack tItem = mContainer.mTileEntity.getMetaTileEntity().getStackInSlot(1);
                     	if(tItem==null || !(tItem.getItem()==GT_MetaGenerated_Tool_01.INSTANCE&&tItem.getItemDamage()>=170&&tItem.getItemDamage()<=177)){
-                    		fontRendererObj.drawString("Missing Turbine Rotor", 10, ((GT_Container_MultiMachine) mContainer).mActive == 0 ? 40 : 24, 16448255);
+                    		fontRendererObj.drawString(trans(12, "Missing Turbine Rotor"), 10, ((GT_Container_MultiMachine) mContainer).mActive == 0 ? 40 : 24, 16448255);
                     	}
                     }                
             }

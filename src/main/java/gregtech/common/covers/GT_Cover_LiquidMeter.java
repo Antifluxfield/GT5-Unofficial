@@ -43,9 +43,9 @@ public class GT_Cover_LiquidMeter extends GT_CoverBehavior {
 
     public int onCoverScrewdriverclick(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         if (aCoverVariable == 0) {
-            GT_Utility.sendChatToPlayer(aPlayer, "Inverted");
+            GT_Utility.sendChatToPlayer(aPlayer, trans(63, "Normal"));
         } else {
-            GT_Utility.sendChatToPlayer(aPlayer, "Normal");
+            GT_Utility.sendChatToPlayer(aPlayer, trans(64, "Inverted"));
         }
         return aCoverVariable == 0 ? 1 : 0;
     }

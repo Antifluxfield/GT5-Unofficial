@@ -17,14 +17,22 @@ import net.minecraft.item.ItemStack;
 public class GT_MetaTileEntity_DieselGenerator
         extends GT_MetaTileEntity_BasicGenerator {
 
+	public static final int BASE_POLLUTION = 2;
     public int mEfficiency;
 
     public GT_MetaTileEntity_DieselGenerator(int aID, String aName, String aNameRegional, int aTier) {
-        super(aID, aName, aNameRegional, aTier, "Requires liquid Fuel");
+        super(aID, aName, aNameRegional, aTier, new String[]{
+                "Requires liquid Fuel",
+                "Causes %%%" + 20 * BASE_POLLUTION * Math.pow(2, aTier - 1) + "%%% Pollution per second"});
         onConfigLoad();
     }
 
     public GT_MetaTileEntity_DieselGenerator(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, aDescription, aTextures);
+        onConfigLoad();
+    }
+
+    public GT_MetaTileEntity_DieselGenerator(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, aDescription, aTextures);
         onConfigLoad();
     }
@@ -34,7 +42,7 @@ public class GT_MetaTileEntity_DieselGenerator
     }
 
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_DieselGenerator(this.mName, this.mTier, this.mDescription, this.mTextures);
+        return new GT_MetaTileEntity_DieselGenerator(this.mName, this.mTier, this.mDescriptions, this.mTextures);
     }
 
     public GT_Recipe.GT_Recipe_Map getRecipes() {
@@ -103,6 +111,6 @@ public class GT_MetaTileEntity_DieselGenerator
 
 	@Override
 	public int getPollution() {
-		return 10;
+		return (int) (20 * BASE_POLLUTION * Math.pow(2, mTier - 1));
 	}
 }

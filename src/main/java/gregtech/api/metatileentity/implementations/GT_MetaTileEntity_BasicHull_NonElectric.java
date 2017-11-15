@@ -8,7 +8,15 @@ public abstract class GT_MetaTileEntity_BasicHull_NonElectric extends GT_MetaTil
         super(aID, aName, aNameRegional, aTier, aDescription);
     }
 
+    public GT_MetaTileEntity_BasicHull_NonElectric(int aID, String aName, String aNameRegional, int aTier, String[] aDescription) {
+        super(aID, aName, aNameRegional, aTier, aDescription);
+    }
+
     public GT_MetaTileEntity_BasicHull_NonElectric(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, 1, aDescription, aTextures);
+    }
+
+    public GT_MetaTileEntity_BasicHull_NonElectric(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 1, aDescription, aTextures);
     }
 

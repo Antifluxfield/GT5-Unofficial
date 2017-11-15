@@ -201,8 +201,8 @@ public abstract class GT_MetaTileEntity_LargeTurbine extends GT_MetaTileEntity_M
 
     @Override
     public String[] getInfoData() {
-        String tRunning = mMaxProgresstime>0 ? "Turbine running":"Turbine stopped";
-        String tMaintainance = getIdealStatus() == getRepairStatus() ? "No Maintainance issues" : "Needs Maintainance" ;
+        String tRunning = mMaxProgresstime>0 ? trans2(14, "Turbine running") : trans2(15, "Turbine stopped");
+        String tMaintainance = getIdealStatus() == getRepairStatus() ? trans2(16, "No Maintainance issues") : trans2(17, "Needs Maintainance");
         int tDura = 0;
 
         if (mInventory[1] != null && mInventory[1].getItem() instanceof GT_MetaGenerated_Tool_01) {
@@ -210,13 +210,13 @@ public abstract class GT_MetaTileEntity_LargeTurbine extends GT_MetaTileEntity_M
         }
 
         return new String[]{
-                "Large Turbine",
+        		getLocalName(),
                 tRunning,
-                "Current Output: "+mEUt+" EU/t",
-                "Optimal Flow: "+(int)realOptFlow+" L/t",
-                "Fuel Remaining: "+storedFluid+"L",
-                "Current Speed: "+(mEfficiency/100)+"%",
-                "Turbine Damage: "+tDura+"%",
+                String.format(trans2(19, "Current Output: %d EU/t"), mEUt),
+                String.format(trans2(20, "Optimal Flow: %d L/t"), (int)realOptFlow),
+                String.format(trans2(8, "Fuel Remaining: %d L"), storedFluid),
+                String.format(trans2(21, "Current Speed: %d%"), mEfficiency/100),
+                String.format(trans2(22, "Turbine Damage: %d%"), tDura),
                 tMaintainance};
     }
 

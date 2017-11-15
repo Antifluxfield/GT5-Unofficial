@@ -37,27 +37,27 @@ public class GT_Container_SuperBuffer
             if (aSlotIndex == 0) {
                 ((GT_MetaTileEntity_ChestBuffer) this.mTileEntity.getMetaTileEntity()).bOutput = (!((GT_MetaTileEntity_ChestBuffer) this.mTileEntity.getMetaTileEntity()).bOutput);
                 if (((GT_MetaTileEntity_ChestBuffer) this.mTileEntity.getMetaTileEntity()).bOutput) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(13, "Emit Energy to Outputside"));
                 } else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(14, "Don't emit Energy"));
                 }
                 return null;
             }
             if (aSlotIndex == 1) {
                 ((GT_MetaTileEntity_ChestBuffer) this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull = (!((GT_MetaTileEntity_ChestBuffer) this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull);
                 if (((GT_MetaTileEntity_ChestBuffer) this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Redstone if no Slot is free");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(15, "Emit Redstone if no Slot is free"));
                 } else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Redstone");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(16, "Don't emit Redstone"));
                 }
                 return null;
             }
             if (aSlotIndex == 2) {
                 ((GT_MetaTileEntity_ChestBuffer) this.mTileEntity.getMetaTileEntity()).bInvert = (!((GT_MetaTileEntity_ChestBuffer) this.mTileEntity.getMetaTileEntity()).bInvert);
                 if (((GT_MetaTileEntity_ChestBuffer) this.mTileEntity.getMetaTileEntity()).bInvert) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Invert Redstone");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(17, "Invert Redstone"));
                 } else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't invert Redstone");
+                	GT_Utility.sendChatToPlayer(aPlayer, trans(18, "Don't invert Redstone"));
                 }
                 return null;
             }

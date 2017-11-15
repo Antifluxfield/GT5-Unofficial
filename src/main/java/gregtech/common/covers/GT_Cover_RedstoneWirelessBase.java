@@ -19,7 +19,7 @@ public abstract class GT_Cover_RedstoneWirelessBase
             GregTech_API.sWirelessRedstone.put(aCoverVariable, (byte) 0);
             aCoverVariable = GT_Utility.stackToIntHash(aPlayer.inventory.getCurrentItem());
             aTileEntity.setCoverDataAtSide(aSide, aCoverVariable);
-            GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + aCoverVariable);
+            GT_Utility.sendChatToPlayer(aPlayer, trans(92, "Frequency: ") + aCoverVariable);
             return true;
         }
         return false;
@@ -43,7 +43,7 @@ public abstract class GT_Cover_RedstoneWirelessBase
                     aCoverVariable += 1024;
             }
         }
-        GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + aCoverVariable);
+        GT_Utility.sendChatToPlayer(aPlayer, trans(92, "Frequency: ") + aCoverVariable);
         return aCoverVariable;
     }
 
@@ -72,7 +72,7 @@ public abstract class GT_Cover_RedstoneWirelessBase
     }
 
     public String getDescription(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity) {
-        return "Frequency: " + aCoverVariable;
+        return trans(92, "Frequency: ") + aCoverVariable;
     }
 
     public int getTickRate(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity) {

@@ -27,6 +27,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,27 +36,40 @@ import static gregtech.api.enums.GT_Values.D1;
 public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
     public final float mThickNess;
     public final Materials mMaterial;
-    public final int mCapacity, mHeatResistance;
+    public final int mCapacity, mHeatResistance, mPipeAmount;
     public final boolean mGasProof;
-    public FluidStack mFluid;
+    public final FluidStack[] mFluids;
     public byte mLastReceivedFrom = 0, oLastReceivedFrom = 0;
 
-    public GT_MetaPipeEntity_Fluid(int aID, String aName, String aNameRegional, float aThickNess, Materials aMaterial, int aCapacity, int aHeatResistance, boolean aGasProof) {
-        super(aID, aName, aNameRegional, 0);
+    public GT_MetaPipeEntity_Fluid(int aID, String aName, String aNameRegional, float aThickNess, Materials aMaterial, int aCapacity, int aHeatResistance, boolean aGasProof, int aFluidTypes) {
+    	super(aID, aName, aNameRegional, 0);
         mThickNess = aThickNess;
         mMaterial = aMaterial;
         mCapacity = aCapacity;
         mGasProof = aGasProof;
         mHeatResistance = aHeatResistance;
+        mPipeAmount = aFluidTypes;
+        mFluids = new FluidStack[aFluidTypes];
     }
 
+    public GT_MetaPipeEntity_Fluid(int aID, String aName, String aNameRegional, float aThickNess, Materials aMaterial, int aCapacity, int aHeatResistance, boolean aGasProof) {
+        this(aID, aName, aNameRegional, aThickNess, aMaterial, aCapacity, aHeatResistance, aGasProof, 1);
+    }
+
+    @Deprecated
     public GT_MetaPipeEntity_Fluid(String aName, float aThickNess, Materials aMaterial, int aCapacity, int aHeatResistance, boolean aGasProof) {
-        super(aName, 0);
+        this(aName, aThickNess, aMaterial, aCapacity, aHeatResistance, aGasProof, 1);
+    }
+
+    public GT_MetaPipeEntity_Fluid(String aName, float aThickNess, Materials aMaterial, int aCapacity, int aHeatResistance, boolean aGasProof, int aFluidTypes) {
+    	super(aName, 0);
         mThickNess = aThickNess;
         mMaterial = aMaterial;
         mCapacity = aCapacity;
         mGasProof = aGasProof;
         mHeatResistance = aHeatResistance;
+        mPipeAmount = aFluidTypes;
+        mFluids = new FluidStack[aFluidTypes];
     }
 
     @Override
@@ -65,12 +79,16 @@ public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaPipeEntity_Fluid(mName, mThickNess, mMaterial, mCapacity, mHeatResistance, mGasProof);
+        return new GT_MetaPipeEntity_Fluid(mName, mThickNess, mMaterial, mCapacity, mHeatResistance, mGasProof, mPipeAmount);
     }
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, byte aSide, byte aConnections, byte aColorIndex, boolean aConnected, boolean aRedstone) {
         if (aConnected) {
+        	if (mPipeAmount >= 9)
+        		return new ITexture[]{new GT_RenderedTexture(mMaterial.mIconSet.mTextures[OrePrefixes.pipeNonuple.mTextureIndex], Dyes.getModulation(aColorIndex, mMaterial.mRGBa))};
+        	if (mPipeAmount >= 4)
+        		return new ITexture[]{new GT_RenderedTexture(mMaterial.mIconSet.mTextures[OrePrefixes.pipeQuadruple.mTextureIndex], Dyes.getModulation(aColorIndex, mMaterial.mRGBa))};
             float tThickNess = getThickNess();
             if (tThickNess < 0.37F)
                 return new ITexture[]{new GT_RenderedTexture(mMaterial.mIconSet.mTextures[OrePrefixes.pipeTiny.mTextureIndex], Dyes.getModulation(aColorIndex, mMaterial.mRGBa))};
@@ -120,24 +138,30 @@ public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
-        if (mFluid != null) aNBT.setTag("mFluid", mFluid.writeToNBT(new NBTTagCompound()));
+    	for (int i = 0; i < mFluids.length; i++)
+    		if (mFluids[i] != null) aNBT.setTag(i==0?"mFluid":"mFluid"+i, mFluids[i].writeToNBT(new NBTTagCompound()));
         aNBT.setByte("mLastReceivedFrom", mLastReceivedFrom);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
-        mFluid = FluidStack.loadFluidStackFromNBT(aNBT.getCompoundTag("mFluid"));
+    	for (int i = 0; i < mFluids.length; i++)
+    		mFluids[i] = FluidStack.loadFluidStackFromNBT(aNBT.getCompoundTag(i==0?"mFluid":"mFluid"+i));
         mLastReceivedFrom = aNBT.getByte("mLastReceivedFrom");
     }
 
     @Override
     public void onEntityCollidedWithBlock(World aWorld, int aX, int aY, int aZ, Entity aEntity) {
-        if (mFluid != null && (((BaseMetaPipeEntity) getBaseMetaTileEntity()).mConnections & -128) == 0 && aEntity instanceof EntityLivingBase) {
-            int tTemperature = mFluid.getFluid().getTemperature(mFluid);
-            if (tTemperature > 320 && !isCoverOnSide((BaseMetaPipeEntity) getBaseMetaTileEntity(), (EntityLivingBase) aEntity)) {
-                GT_Utility.applyHeatDamage((EntityLivingBase) aEntity, (tTemperature - 300) / 50.0F);
-            } else if (tTemperature < 260 && !isCoverOnSide((BaseMetaPipeEntity) getBaseMetaTileEntity(), (EntityLivingBase) aEntity)) {
-                GT_Utility.applyFrostDamage((EntityLivingBase) aEntity, (270 - tTemperature) / 25.0F);
+        if ((((BaseMetaPipeEntity) getBaseMetaTileEntity()).mConnections & -128) == 0 && aEntity instanceof EntityLivingBase) {
+            for (FluidStack tFluid : mFluids) {
+            	if (tFluid != null) {
+                	int tTemperature = tFluid.getFluid().getTemperature(tFluid);
+                    if (tTemperature > 320 && !isCoverOnSide((BaseMetaPipeEntity) getBaseMetaTileEntity(), (EntityLivingBase) aEntity)) {
+                        GT_Utility.applyHeatDamage((EntityLivingBase) aEntity, (tTemperature - 300) / 50.0F);
+                    } else if (tTemperature < 260 && !isCoverOnSide((BaseMetaPipeEntity) getBaseMetaTileEntity(), (EntityLivingBase) aEntity)) {
+                        GT_Utility.applyFrostDamage((EntityLivingBase) aEntity, (270 - tTemperature) / 25.0F);
+                    }
+                }
             }
         }
     }
@@ -155,36 +179,38 @@ public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
                 mLastReceivedFrom = 0;
             }
 
-            if (mFluid != null && mFluid.amount > 0) {
-                int tTemperature = mFluid.getFluid().getTemperature(mFluid);
-                if (tTemperature > mHeatResistance) {
-                    if (aBaseMetaTileEntity.getRandomNumber(100) == 0) {
-                        aBaseMetaTileEntity.setToFire();
-                        return;
-                    }
-                    aBaseMetaTileEntity.setOnFire();
-                }
-                if (!mGasProof && mFluid.getFluid().isGaseous(mFluid)) {
-                    mFluid.amount -= 5;
-                    sendSound((byte) 9);
-                    if (tTemperature > 320) {
-                        try {
-                            for (EntityLivingBase tLiving : getBaseMetaTileEntity().getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(getBaseMetaTileEntity().getXCoord() - 2, getBaseMetaTileEntity().getYCoord() - 2, getBaseMetaTileEntity().getZCoord() - 2, getBaseMetaTileEntity().getXCoord() + 3, getBaseMetaTileEntity().getYCoord() + 3, getBaseMetaTileEntity().getZCoord() + 3))) {
-                                GT_Utility.applyHeatDamage(tLiving, (tTemperature - 300) / 25.0F);
-                            }
-                        } catch (Throwable e) {
-                            if (D1) e.printStackTrace(GT_Log.err);
+            for (FluidStack tFluid : mFluids) {
+            	if (tFluid != null && tFluid.amount > 0) {
+                    int tTemperature = tFluid.getFluid().getTemperature(tFluid);
+                    if (tTemperature > mHeatResistance) {
+                        if (aBaseMetaTileEntity.getRandomNumber(100) == 0) {
+                            aBaseMetaTileEntity.setToFire();
+                            return;
                         }
-                    } else if (tTemperature < 260) {
-                        try {
-                            for (EntityLivingBase tLiving : getBaseMetaTileEntity().getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(getBaseMetaTileEntity().getXCoord() - 2, getBaseMetaTileEntity().getYCoord() - 2, getBaseMetaTileEntity().getZCoord() - 2, getBaseMetaTileEntity().getXCoord() + 3, getBaseMetaTileEntity().getYCoord() + 3, getBaseMetaTileEntity().getZCoord() + 3))) {
-                                GT_Utility.applyFrostDamage(tLiving, (270 - tTemperature) / 12.5F);
-                            }
-                        } catch (Throwable e) {
-                            if (D1) e.printStackTrace(GT_Log.err);
-                        }
+                        aBaseMetaTileEntity.setOnFire();
                     }
-                    if (mFluid.amount <= 0) mFluid = null;
+                    if (!mGasProof && tFluid.getFluid().isGaseous(tFluid)) {
+                        tFluid.amount -= 5;
+                        sendSound((byte) 9);
+                        if (tTemperature > 320) {
+                            try {
+                                for (EntityLivingBase tLiving : getBaseMetaTileEntity().getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(getBaseMetaTileEntity().getXCoord() - 2, getBaseMetaTileEntity().getYCoord() - 2, getBaseMetaTileEntity().getZCoord() - 2, getBaseMetaTileEntity().getXCoord() + 3, getBaseMetaTileEntity().getYCoord() + 3, getBaseMetaTileEntity().getZCoord() + 3))) {
+                                    GT_Utility.applyHeatDamage(tLiving, (tTemperature - 300) / 25.0F);
+                                }
+                            } catch (Throwable e) {
+                                if (D1) e.printStackTrace(GT_Log.err);
+                            }
+                        } else if (tTemperature < 260) {
+                            try {
+                                for (EntityLivingBase tLiving : getBaseMetaTileEntity().getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(getBaseMetaTileEntity().getXCoord() - 2, getBaseMetaTileEntity().getYCoord() - 2, getBaseMetaTileEntity().getZCoord() - 2, getBaseMetaTileEntity().getXCoord() + 3, getBaseMetaTileEntity().getYCoord() + 3, getBaseMetaTileEntity().getZCoord() + 3))) {
+                                    GT_Utility.applyFrostDamage(tLiving, (270 - tTemperature) / 12.5F);
+                                }
+                            } catch (Throwable e) {
+                                if (D1) e.printStackTrace(GT_Log.err);
+                            }
+                        }
+                        if (tFluid.amount <= 0) tFluid = null;
+                    }
                 }
             }
 
@@ -238,28 +264,31 @@ public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
                     }
                 }
 
-                if (mFluid != null && mFluid.amount > 0) {
-                    int tAmount = Math.max(1, Math.min(mCapacity * 10, mFluid.amount / 2)), tSuccessfulTankAmount = 0;
+                for (int i = 0, j = aBaseMetaTileEntity.getRandomNumber(mPipeAmount); i < mPipeAmount; i++) {
+                	int index = (i + j) % mPipeAmount;
+                	if (mFluids[index] != null && mFluids[index].amount > 0) {
+                        int tAmount = Math.max(1, Math.min(mCapacity * 10, mFluids[index].amount / 2)), tSuccessfulTankAmount = 0;
 
-                    for (Map.Entry<IFluidHandler, EnumFacing> tEntry : tTanks.entrySet())
-                        if (tEntry.getKey().fill(tEntry.getValue(), drain(tAmount, false), false) > 0)
-                            tSuccessfulTankAmount++;
+                        for (Map.Entry<IFluidHandler, EnumFacing> tEntry : tTanks.entrySet())
+                            if (tEntry.getKey().fill(tEntry.getValue(), drainFromIndex(tAmount, false, index), false) > 0)
+                                tSuccessfulTankAmount++;
 
-                    if (tSuccessfulTankAmount > 0) {
-                        if (tAmount >= tSuccessfulTankAmount) {
-                            tAmount /= tSuccessfulTankAmount;
-                            for (Map.Entry<IFluidHandler, EnumFacing> tTileEntity : tTanks.entrySet()) {
-                                if (mFluid == null || mFluid.amount <= 0) break;
-                                int tFilledAmount = tTileEntity.getKey().fill(tTileEntity.getValue(), drain(tAmount, false), false);
-                                if (tFilledAmount > 0)
-                                    tTileEntity.getKey().fill(tTileEntity.getValue(), drain(tFilledAmount, true), true);
-                            }
-                        } else {
-                            for (Map.Entry<IFluidHandler, EnumFacing> tTileEntity : tTanks.entrySet()) {
-                                if (mFluid == null || mFluid.amount <= 0) break;
-                                int tFilledAmount = tTileEntity.getKey().fill(tTileEntity.getValue(), drain(mFluid.amount, false), false);
-                                if (tFilledAmount > 0)
-                                    tTileEntity.getKey().fill(tTileEntity.getValue(), drain(tFilledAmount, true), true);
+                        if (tSuccessfulTankAmount > 0) {
+                            if (tAmount >= tSuccessfulTankAmount) {
+                                tAmount /= tSuccessfulTankAmount;
+                                for (Map.Entry<IFluidHandler, EnumFacing> tTileEntity : tTanks.entrySet()) {
+                                    if (mFluids[index] == null || mFluids[index].amount <= 0) break;
+                                    int tFilledAmount = tTileEntity.getKey().fill(tTileEntity.getValue(), drain(tAmount, false), false);
+                                    if (tFilledAmount > 0)
+                                        tTileEntity.getKey().fill(tTileEntity.getValue(), drainFromIndex(tFilledAmount, true, index), true);
+                                }
+                            } else {
+                                for (Map.Entry<IFluidHandler, EnumFacing> tTileEntity : tTanks.entrySet()) {
+                                    if (mFluids[index] == null || mFluids[index].amount <= 0) break;
+                                    int tFilledAmount = tTileEntity.getKey().fill(tTileEntity.getValue(), drainFromIndex(mFluids[index].amount, false, index), false);
+                                    if (tFilledAmount > 0)
+                                        tTileEntity.getKey().fill(tTileEntity.getValue(), drainFromIndex(tFilledAmount, true, index), true);
+                                }
                             }
                         }
                     }
@@ -287,7 +316,25 @@ public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 
     @Override
     public final int getCapacity() {
-        return mCapacity * 20;
+        return mCapacity * 20 * mPipeAmount;
+    }
+
+    @Override
+    public FluidTankInfo getInfo() {
+    	for (FluidStack tFluid : mFluids) {
+    		if (tFluid != null)
+    			return new FluidTankInfo(tFluid, mCapacity * 20);
+    	}
+    	return new FluidTankInfo(null, mCapacity * 20);
+    }
+
+    @Override
+    public FluidTankInfo[] getTankInfo(EnumFacing aSide) {
+        if (getCapacity() <= 0 && !getBaseMetaTileEntity().hasSteamEngineUpgrade()) return new FluidTankInfo[]{};
+        ArrayList<FluidTankInfo> tList = new ArrayList<>();
+        for (FluidStack tFluid : mFluids)
+        	tList.add(new FluidTankInfo(tFluid, mCapacity * 20));
+        return tList.toArray(new FluidTankInfo[mPipeAmount]);
     }
 
     @Override
@@ -302,46 +349,71 @@ public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 
     @Override
     public final FluidStack getFluid() {
-        return mFluid;
+    	for (FluidStack tFluid : mFluids) {
+    		if (tFluid != null)
+    			return tFluid;
+    	}
+        return null;
     }
 
     @Override
     public final int getFluidAmount() {
-        return mFluid != null ? mFluid.amount : 0;
+    	int rAmount = 0;
+    	for (FluidStack tFluid : mFluids) {
+    		if (tFluid != null)
+    			rAmount += tFluid.amount;
+    	}
+        return rAmount;
     }
 
     @Override
     public final int fill_default(EnumFacing aSide, FluidStack aFluid, boolean doFill) {
+    	if (aFluid == null) return 0;
+
+        int index = -1;
+        for (int i = 0; i < mPipeAmount; i++) {
+        	if (mFluids[i] != null && mFluids[i].isFluidEqual(aFluid)) {
+        		index = i; break;
+        	}
+        	else if ((mFluids[i] == null) && index < 0) {
+        		index = i;
+        	}
+        }
+        
+        return fill_default_intoIndex(aSide, aFluid, doFill, index);
+    }
+    
+    private final int fill_default_intoIndex(EnumFacing aSide, FluidStack aFluid, boolean doFill, int index) {
         if (aFluid == null) return 0;
 
-        if (mFluid == null) {
+        if (mFluids[index] == null) {
             if (aFluid.amount <= getCapacity()) {
                 if (doFill) {
-                    mFluid = aFluid.copy();
+                    mFluids[index] = aFluid.copy();
                     mLastReceivedFrom |= (1 << aSide.ordinal());
                 }
                 return aFluid.amount;
             }
             if (doFill) {
-                mFluid = aFluid.copy();
+                mFluids[index] = aFluid.copy();
                 mLastReceivedFrom |= (1 << aSide.ordinal());
-                mFluid.amount = getCapacity();
+                mFluids[index].amount = getCapacity();
             }
             return getCapacity();
         }
 
-        if (!mFluid.isFluidEqual(aFluid)) return 0;
+        if (!mFluids[index].isFluidEqual(aFluid)) return 0;
 
-        int space = getCapacity() - mFluid.amount;
+        int space = getCapacity() - mFluids[index].amount;
         if (aFluid.amount <= space) {
             if (doFill) {
-                mFluid.amount += aFluid.amount;
+                mFluids[index].amount += aFluid.amount;
                 mLastReceivedFrom |= (1 << aSide.ordinal());
             }
             return aFluid.amount;
         }
         if (doFill) {
-            mFluid.amount = getCapacity();
+            mFluids[index].amount = getCapacity();
             mLastReceivedFrom |= (1 << aSide.ordinal());
         }
         return space;
@@ -349,25 +421,35 @@ public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 
     @Override
     public final FluidStack drain(int maxDrain, boolean doDrain) {
-        if (mFluid == null) return null;
-        if (mFluid.amount <= 0) {
-            mFluid = null;
+    	FluidStack drained = null;
+    	for (int i = 0; i < mPipeAmount; i++) {
+    		if ((drained = drainFromIndex(maxDrain, doDrain, i)) != null)
+    			return drained;
+    	}
+    	return null;
+    }
+
+    private final FluidStack drainFromIndex(int maxDrain, boolean doDrain, int index) {
+    	if (index < 0 || index >= mPipeAmount) return null;
+    	if (mFluids[index] == null) return null;
+        if (mFluids[index].amount <= 0) {
+            mFluids[index] = null;
             return null;
         }
 
         int used = maxDrain;
-        if (mFluid.amount < used)
-            used = mFluid.amount;
+        if (mFluids[index].amount < used)
+            used = mFluids[index].amount;
 
         if (doDrain) {
-            mFluid.amount -= used;
+            mFluids[index].amount -= used;
         }
 
-        FluidStack drained = mFluid.copy();
+        FluidStack drained = mFluids[index].copy();
         drained.amount = used;
 
-        if (mFluid.amount <= 0) {
-            mFluid = null;
+        if (mFluids[index].amount <= 0) {
+            mFluids[index] = null;
         }
 
         return drained;
@@ -375,15 +457,23 @@ public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 
     @Override
     public int getTankPressure() {
-        return (mFluid == null ? 0 : mFluid.amount) - (getCapacity() / 2);
+    	return getFluidAmount() - (getCapacity() / 2);
     }
 
     @Override
     public String[] getDescription() {
-        return new String[]{
-                TextFormatting.BLUE + "Fluid Capacity: %%%" + (mCapacity * 20) + "L/sec" + TextFormatting.GRAY,
-                TextFormatting.RED + "Heat Limit: %%%" + mHeatResistance + " K" + TextFormatting.GRAY
-        };
+    	if (mPipeAmount == 1) {
+        	return new String[]{
+                    TextFormatting.BLUE + "Fluid Capacity: %%%" + (mCapacity * 20) + "%%% L/sec" + TextFormatting.GRAY,
+                    TextFormatting.RED + "Heat Limit: %%%" + mHeatResistance + "%%% K" + TextFormatting.GRAY
+            };
+        } else {
+        	return new String[]{
+                    TextFormatting.BLUE + "Fluid Capacity: %%%" + (mCapacity * 20) + "%%% L/sec" + TextFormatting.GRAY,
+                    TextFormatting.RED + "Heat Limit: %%%" + mHeatResistance + "%%% K" + TextFormatting.GRAY,
+                    TextFormatting.AQUA + "Pipe Amount: %%%" + mPipeAmount + TextFormatting.GRAY
+            };
+        }
     }
 
     @Override

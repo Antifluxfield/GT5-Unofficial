@@ -72,6 +72,10 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
      *                  13 = SideFacingPipeInactive
      */
     public GT_MetaTileEntity_BasicMachine(int aID, String aName, String aNameRegional, int aTier, int aAmperage, String aDescription, int aInputSlotCount, int aOutputSlotCount, String aGUIName, String aNEIName, ITexture... aOverlays) {
+        this(aID, aName, aNameRegional, aTier, aAmperage, new String[]{aDescription}, aInputSlotCount, aOutputSlotCount, aGUIName, aNEIName, aOverlays);
+    }
+
+    public GT_MetaTileEntity_BasicMachine(int aID, String aName, String aNameRegional, int aTier, int aAmperage, String[] aDescription, int aInputSlotCount, int aOutputSlotCount, String aGUIName, String aNEIName, ITexture... aOverlays) {
         super(aID, aName, aNameRegional, aTier, OTHER_SLOT_COUNT + aInputSlotCount + aOutputSlotCount + 1, aDescription, aOverlays);
         mInputSlotCount = Math.max(0, aInputSlotCount);
         mOutputItems = new ItemStack[Math.max(0, aOutputSlotCount)];
@@ -81,6 +85,10 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
     }
 
     public GT_MetaTileEntity_BasicMachine(String aName, int aTier, int aAmperage, String aDescription, ITexture[][][] aTextures, int aInputSlotCount, int aOutputSlotCount, String aGUIName, String aNEIName) {
+        this(aName, aTier, aAmperage, new String[]{aDescription}, aTextures, aInputSlotCount, aOutputSlotCount, aGUIName, aNEIName);
+    }
+
+    public GT_MetaTileEntity_BasicMachine(String aName, int aTier, int aAmperage, String[] aDescription, ITexture[][][] aTextures, int aInputSlotCount, int aOutputSlotCount, String aGUIName, String aNEIName) {
         super(aName, aTier, OTHER_SLOT_COUNT + aInputSlotCount + aOutputSlotCount + 1, aDescription, aTextures);
         mInputSlotCount = Math.max(0, aInputSlotCount);
         mOutputItems = new ItemStack[Math.max(0, aOutputSlotCount)];
@@ -664,9 +672,10 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
     public String[] getInfoData() {
         return new String[]{
                 mNEIName,
-                "Progress:", (mProgresstime / 20) + " secs",
-                (mMaxProgresstime / 20) + " secs",
-                "Stored Energy:",
+                trans2(0, "Progress:"),
+                (mProgresstime / 20) + trans2(1, "secs"),
+                (mMaxProgresstime / 20) + trans2(1, "secs"),
+                trans(18, "Stored Energy:"),
                 getBaseMetaTileEntity().getStoredEU() + "EU",
                 getBaseMetaTileEntity().getEUCapacity() + "EU"};
     }
@@ -680,7 +689,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
     public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         if (aSide == getBaseMetaTileEntity().getFrontFacing() || aSide == mMainFacing) {
             mAllowInputFromOutputSide = !mAllowInputFromOutputSide;
-            GT_Utility.sendChatToPlayer(aPlayer, mAllowInputFromOutputSide ? "Input from Output Side allowed" : "Input from Output Side forbidden");
+            GT_Utility.sendChatToPlayer(aPlayer, mAllowInputFromOutputSide ? trans(33, "Input from Output Side allowed") : trans(34, "Input from Output Side forbidden"));
         }
     }
 

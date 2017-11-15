@@ -3,6 +3,7 @@ package gregtech.common.items.behaviors;
 import gregtech.api.enums.SubTag;
 import gregtech.api.interfaces.IItemBehaviour;
 import gregtech.api.items.GT_MetaBase_Item;
+import gregtech.api.util.GT_LanguageManager;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
@@ -80,5 +81,9 @@ public class Behaviour_None
 
     public EntityArrow getProjectile(GT_MetaBase_Item aItem, SubTag aProjectileType, ItemStack aStack, World aWorld, EntityLivingBase aEntity, float aSpeed) {
         return null;
+    }
+
+    public String trans(int aKey, String aEnglish) {
+    	return GT_LanguageManager.addStringLocalization(String.format("Interaction_DESCRIPTION_Index_%03d", aKey), aEnglish, false);
     }
 }

@@ -56,9 +56,9 @@ public class GT_Generic_Item extends Item implements IProjectileItem {
     public GT_Generic_Item(String aUnlocalized, String aEnglish, String aEnglishTooltip, boolean aWriteToolTipIntoLangFile) {
         super();
         mName = "gt." + aUnlocalized;
-        GT_LanguageManager.addStringLocalization(mName + ".name", aEnglish);
+        GT_LanguageManager.addStringLocalization(mName.toLowerCase() + ".name", aEnglish);
         if (GT_Utility.isStringValid(aEnglishTooltip))
-            GT_LanguageManager.addStringLocalization(mTooltip = mName + ".tooltip_main", aEnglishTooltip, aWriteToolTipIntoLangFile);
+            GT_LanguageManager.addStringLocalization(mTooltip = mName.toLowerCase() + ".tooltip_main", aEnglishTooltip, aWriteToolTipIntoLangFile);
         else mTooltip = null;
         setCreativeTab(GregTech_API.TAB_GREGTECH);
         setRegistryName(MOD_ID, mName);
@@ -198,6 +198,10 @@ public class GT_Generic_Item extends Item implements IProjectileItem {
         if(FMLCommonHandler.instance().getSide().isClient()) {
             runnable.run();
         }
+    }
+
+    public String trans(int aKey, String aEnglish) {
+        return GT_LanguageManager.addStringLocalization(String.format("Item_DESCRIPTION_Index_%03d", aKey), aEnglish, false);
     }
 
 }

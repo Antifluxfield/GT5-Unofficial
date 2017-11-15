@@ -126,7 +126,7 @@ public class GT_Block_GeneratedOres extends GT_Generic_Block {
                 variants[j] = getStateFromMeta(i * MATERIALS_META_OFFSET + j);
                 ItemStack itemStack = new ItemStack(this, 1, i * MATERIALS_META_OFFSET + j);
                 GT_OreDictUnificator.registerOre(StoneTypes.mTypes[j].processingPrefix.get(aMaterial), itemStack);
-                GT_LanguageManager.addStringLocalization(mUnlocalizedName + "." + itemStack.getItemDamage() + ".name", (small ? "Small " : "") + getLocalizedName(aMaterial));
+                GT_LanguageManager.addStringLocalization(mUnlocalizedName + "." + itemStack.getItemDamage() + ".name", (small ? "Small " : "") + getLocalizedNameFormat(aMaterial));
             }
             (small ? sGeneratedSmallBlocks : sGeneratedBlocks)[aMaterial.mMetaItemSubID] = variants;
         }
@@ -282,7 +282,12 @@ public class GT_Block_GeneratedOres extends GT_Generic_Block {
         return rList;
     }
 
+    @Deprecated
     public String getLocalizedName(Materials aMaterial) {
+    	return aMaterial.getLocalizedNameForItem(getLocalizedNameFormat(aMaterial));
+    }
+
+    public String getLocalizedNameFormat(Materials aMaterial) {
         switch (aMaterial.mName) {
 
             case "InfusedAir":
@@ -293,7 +298,7 @@ public class GT_Block_GeneratedOres extends GT_Generic_Block {
             case "InfusedOrder":
             case "InfusedVis":
             case "InfusedWater":
-                return aMaterial.mDefaultLocalName + " Infused Stone";
+                return "%material Infused Stone";
 
             case "Vermiculite":
             case "Bentonite":
@@ -307,10 +312,10 @@ public class GT_Block_GeneratedOres extends GT_Generic_Block {
             case "QuartzSand":
             case "Pitchblende":
             case "FullersEarth":
-                return aMaterial.mDefaultLocalName;
+                return "%material";
 
             default:
-                return aMaterial.mDefaultLocalName + OrePrefixes.ore.mLocalizedMaterialPost;
+                return "%material" + OrePrefixes.ore.mLocalizedMaterialPost;
         }
     }
 

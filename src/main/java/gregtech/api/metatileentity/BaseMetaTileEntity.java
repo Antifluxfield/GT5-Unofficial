@@ -1286,7 +1286,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
                         if (GT_ModHandler.damageOrDechargeItem(tCurrentItem, 1, 1000, aPlayer)) {
                             mInputDisabled = !mInputDisabled;
                             if (mInputDisabled) mOutputDisabled = !mOutputDisabled;
-                            GT_Utility.sendChatToPlayer(aPlayer, "Auto-Input: " + (mInputDisabled ? "Disabled" : "Enabled") + "  Auto-Output: " + (mOutputDisabled ? "Disabled" : "Enabled"));
+                            GT_Utility.sendChatToPlayer(aPlayer, (mInputDisabled ? trans(29, "Auto-Input: Disabled") : trans(30, "Auto-Input: Enabled")) + "  " + (mOutputDisabled ? trans(31, "Auto-Output: Disabled") : trans(32, "Auto-Output: Enabled")));
                             GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(1), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
                         }
                         return true;
@@ -1296,7 +1296,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
                         if (GT_ModHandler.damageOrDechargeItem(tCurrentItem, 1, 1000, aPlayer)) {
                             if (mWorks) disableWorking();
                             else enableWorking();
-                            GT_Utility.sendChatToPlayer(aPlayer, "Machine Processing: " + (isAllowedToWork() ? "Enabled" : "Disabled"));
+                            getMetaTileEntity().sendModeSwitchText(aPlayer, isAllowedToWork());
                             GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(101), 1.0F, -1, getXCoord(), getYCoord(), getZCoord());
                         }
                         return true;
@@ -1306,7 +1306,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
                         byte tSide = GT_Utility.determineWrenchingSide(aSide, aX, aY, aZ);
                         if (GT_ModHandler.useSolderingIron(tCurrentItem, aPlayer)) {
                             mStrongRedstone ^= (1 << tSide);
-                            GT_Utility.sendChatToPlayer(aPlayer, "Redstone Output at Side " + tSide + " set to: " + ((mStrongRedstone & (1 << tSide)) != 0 ? "Strong" : "Weak"));
+                            GT_Utility.sendChatToPlayer(aPlayer, String.format((mStrongRedstone & (1 << tSide)) != 0 ? trans(27, "Redstone Output at %s side set to: Strong") : trans(28, "Redstone Output at %s side set to: Weak"), GT_LanguageManager.getFaceSideName(aSide)));
                             GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(103), 3.0F, -1, getXCoord(), getYCoord(), getZCoord());
                         }
                         return true;

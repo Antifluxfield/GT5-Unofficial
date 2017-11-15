@@ -30,7 +30,15 @@ public class GT_MetaTileEntity_Transformer extends GT_MetaTileEntity_TieredMachi
         super(aID, aName, aNameRegional, aTier, 0, aDescription);
     }
 
+    public GT_MetaTileEntity_Transformer(int aID, String aName, String aNameRegional, int aTier, String[] aDescription) {
+        super(aID, aName, aNameRegional, aTier, 0, aDescription);
+    }
+
     public GT_MetaTileEntity_Transformer(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, 0, aDescription, aTextures);
+    }
+
+    public GT_MetaTileEntity_Transformer(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 0, aDescription, aTextures);
     }
 
@@ -61,7 +69,7 @@ public class GT_MetaTileEntity_Transformer extends GT_MetaTileEntity_TieredMachi
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GT_MetaTileEntity_Transformer(mName, mTier, mDescription, mTextures);
+        return new GT_MetaTileEntity_Transformer(mName, mTier, mDescriptions, mTextures);
     }
 
     @Override
@@ -180,5 +188,10 @@ public class GT_MetaTileEntity_Transformer extends GT_MetaTileEntity_TieredMachi
     @Override
     public boolean allowPutStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, byte aSide, ItemStack aStack) {
         return false;
+    }
+
+    @Override
+    public void sendModeSwitchText(EntityPlayer aPlayer, boolean isAllowedToWork) {
+    	GT_Utility.sendChatToPlayer(aPlayer, String.format(isAllowedToWork ? trans(45, "Step Down, In: %dV@%dAmp, Out: %dV@%dAmp") : trans(46, "Step Up, In: %dV@%dAmp, Out: %dV@%dAmp"), maxEUInput(), maxAmperesIn(), maxEUOutput(), maxAmperesOut()));
     }
 }

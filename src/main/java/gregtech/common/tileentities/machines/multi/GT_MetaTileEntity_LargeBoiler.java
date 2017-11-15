@@ -45,7 +45,8 @@ public abstract class GT_MetaTileEntity_LargeBoiler
                 "1x Output Hatch (Any Casing)",
                 "1x Maintenance Hatch (Any Firebox)",
                 "1x Muffler Hatch (Any Firebox)",
-                "Refined liquid fuels have 1/4 efficiency"};
+                "Refined liquid fuels have 1/4 efficiency", 
+                "Causes %%%" + 20 * getPollutionPerTick(null) + "%%% Pollution per second"};
     }
 
     public abstract Block getCasingBlock();

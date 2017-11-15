@@ -339,18 +339,19 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
         if (tStats != null) {
             String name = aStack.getUnlocalizedName();
             if (name.equals("gt.metatool.01.170") || name.equals("gt.metatool.01.172") || name.equals("gt.metatool.01.174") || name.equals("gt.metatool.01.176")) {
-                aList.add(tOffset, TextFormatting.WHITE + "Durability: " + TextFormatting.GREEN + (tMaxDamage - getToolDamage(aStack)) + " / " + tMaxDamage + TextFormatting.GRAY);
-                aList.add(tOffset + 1, TextFormatting.WHITE + tMaterial.mDefaultLocalName + TextFormatting.YELLOW + " lvl " + getHarvestLevel(aStack, "") + TextFormatting.GRAY);
-                aList.add(tOffset + 2, TextFormatting.WHITE + "Turbine Efficency: " + TextFormatting.BLUE + (50.0F + (10.0F * getToolCombatDamage(aStack))) + TextFormatting.GRAY);
-                aList.add(tOffset + 3, TextFormatting.WHITE + "Optimal Steam flow: " + TextFormatting.LIGHT_PURPLE + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed * 1000) + TextFormatting.GRAY + "L/sec");
-                aList.add(tOffset + 3, TextFormatting.WHITE + "Optimal Gas flow(EU burnvalue per tick): " + TextFormatting.LIGHT_PURPLE + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed * 50) + TextFormatting.GRAY + "EU/t");
-                aList.add(tOffset + 3, TextFormatting.WHITE + "Optimal Plasma flow(Plasma energyvalue per tick): " + TextFormatting.LIGHT_PURPLE + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed * 2000) + TextFormatting.GRAY + "EU/t");
+            	aList.add(tOffset + 0, TextFormatting.WHITE + String.format(trans(1, "Durability: %s/%s"), "" + TextFormatting.GREEN + (tMaxDamage - getToolDamage(aStack)) + " ", " " + tMaxDamage) + TextFormatting.GRAY);
+                aList.add(tOffset + 1, TextFormatting.WHITE + String.format(trans(2, "%s lvl %s"), tMaterial.mLocalizedName + TextFormatting.YELLOW, "" + getHarvestLevel(aStack, "")) + TextFormatting.GRAY);
+                aList.add(tOffset + 2, TextFormatting.WHITE + String.format(trans(5, "Turbine Efficiency: %s"), "" + TextFormatting.BLUE + (50.0F + (10.0F * getToolCombatDamage(aStack)))) + TextFormatting.GRAY);
+                aList.add(tOffset + 3, TextFormatting.WHITE + String.format(trans(6, "Optimal Steam flow: %sL/sec"), "" + TextFormatting.LIGHT_PURPLE + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed * 1000) + TextFormatting.GRAY));
+                aList.add(tOffset + 4, TextFormatting.WHITE + String.format(trans(7, "Optimal Gas flow(EU burnvalue per tick): %sEU/t"), "" + TextFormatting.LIGHT_PURPLE + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed * 50) + TextFormatting.GRAY));
+                aList.add(tOffset + 5, TextFormatting.WHITE + String.format(trans(8, "Optimal Plasma flow(Plasma energyvalue per tick): %sEU/t"), "" + TextFormatting.LIGHT_PURPLE + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed * 2000) + TextFormatting.GRAY));
 
             } else {
-                aList.add(tOffset + 0, TextFormatting.WHITE + "Durability: " + TextFormatting.GREEN + (tMaxDamage - getToolDamage(aStack)) + " / " + tMaxDamage + TextFormatting.GRAY);
-                aList.add(tOffset + 1, TextFormatting.WHITE + tMaterial.mDefaultLocalName + TextFormatting.YELLOW + " lvl " + getHarvestLevel(aStack, "") + TextFormatting.GRAY);
-                aList.add(tOffset + 2, TextFormatting.WHITE + "Attack Damage: " + TextFormatting.BLUE + getToolCombatDamage(aStack) + TextFormatting.GRAY);
-                aList.add(tOffset + 3, TextFormatting.WHITE + "Mining Speed: " + TextFormatting.LIGHT_PURPLE + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed) + TextFormatting.GRAY);
+            	aList.add(tOffset + 0, TextFormatting.WHITE + String.format(trans(1, "Durability: %s/%s"), "" + TextFormatting.GREEN + (tMaxDamage - getToolDamage(aStack)) + " ", " " + tMaxDamage) + TextFormatting.GRAY);
+                aList.add(tOffset + 1, TextFormatting.WHITE + String.format(trans(2, "%s lvl %s"), tMaterial.mLocalizedName + TextFormatting.YELLOW, "" + getHarvestLevel(aStack, "")) + TextFormatting.GRAY);
+                aList.add(tOffset + 2, TextFormatting.WHITE + String.format(trans(3, "Attack Damage: %s"), "" + TextFormatting.BLUE + getToolCombatDamage(aStack)) + TextFormatting.GRAY);
+                aList.add(tOffset + 3, TextFormatting.WHITE + String.format(trans(4, "Mining Speed: %s"), "" + TextFormatting.LIGHT_PURPLE + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed)) + TextFormatting.GRAY);
+
                 NBTTagCompound aNBT = aStack.getTagCompound();
                 if (aNBT != null) {
                     aNBT = aNBT.getCompoundTag("GT.ToolStats");
@@ -367,7 +368,7 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
                             if(tHeat>-10000)aNBT.setInteger("Heat", tHeat);
                         }
 
-                        aList.add(tOffset + 3, TextFormatting.RED + "Heat: " + aNBT.getInteger("Heat")+" K" + TextFormatting.GRAY);
+                        aList.add(tOffset + 3, TextFormatting.RED + String.format(trans(20, "Heat: %dK"), aNBT.getInteger("Heat")) + TextFormatting.GRAY);
                     }
                 }
             }

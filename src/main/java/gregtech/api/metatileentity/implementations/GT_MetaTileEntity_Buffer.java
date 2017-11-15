@@ -20,7 +20,15 @@ public abstract class GT_MetaTileEntity_Buffer extends GT_MetaTileEntity_TieredM
         super(aID, aName, aNameRegional, aTier, aInvSlotCount, aDescription);
     }
 
+    public GT_MetaTileEntity_Buffer(int aID, String aName, String aNameRegional, int aTier, int aInvSlotCount, String[] aDescription) {
+        super(aID, aName, aNameRegional, aTier, aInvSlotCount, aDescription);
+    }
+
     public GT_MetaTileEntity_Buffer(String aName, int aTier, int aInvSlotCount, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, aInvSlotCount, aDescription, aTextures);
+    }
+
+    public GT_MetaTileEntity_Buffer(String aName, int aTier, int aInvSlotCount, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, aInvSlotCount, aDescription, aTextures);
     }
 
@@ -208,11 +216,7 @@ public abstract class GT_MetaTileEntity_Buffer extends GT_MetaTileEntity_TieredM
         	
             mTargetStackSize = (byte) ((mTargetStackSize + (aPlayer.isSneaking()? -1 : 1)) % 65);
             if(mTargetStackSize <0){mTargetStackSize = 64;}
-            if (mTargetStackSize == 0) {
-                GT_Utility.sendChatToPlayer(aPlayer, "Do not regulate Item Stack Size");
-            } else {
-                GT_Utility.sendChatToPlayer(aPlayer, "Regulate Item Stack Size to: " + mTargetStackSize);
-            }
+            GT_Utility.sendChatToPlayer(aPlayer, mTargetStackSize == 0 ? trans(35, "Do not regulate Item Stack Size") : (trans(36, "Regulate Item Stack Size to: ") + mTargetStackSize));
         }
     }
 

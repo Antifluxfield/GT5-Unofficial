@@ -22,7 +22,15 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity
         super(aID, aName, aNameRegional, aTier, 3, aDescription, aTextures);
     }
 
+    public GT_MetaTileEntity_BasicGenerator(int aID, String aName, String aNameRegional, int aTier, String[] aDescription, ITexture... aTextures) {
+        super(aID, aName, aNameRegional, aTier, 3, aDescription, aTextures);
+    }
+
     public GT_MetaTileEntity_BasicGenerator(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
+        super(aName, aTier, 3, aDescription, aTextures);
+    }
+
+    public GT_MetaTileEntity_BasicGenerator(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 3, aDescription, aTextures);
     }
 
@@ -51,7 +59,10 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity
 
     @Override
     public String[] getDescription() {
-        return new String[]{mDescription, "Fuel Efficiency: " + getEfficiency() + "%"};
+    	String[] desc = new String[mDescriptions.length + 1];
+    	System.arraycopy(mDescriptions, 0, desc, 0, mDescriptions.length);
+    	desc[mDescriptions.length] = "Fuel Efficiency: %%%" + getEfficiency() + "%";
+    	return desc;
     }
 
     @Override
