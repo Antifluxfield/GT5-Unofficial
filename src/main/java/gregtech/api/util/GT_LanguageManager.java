@@ -28,6 +28,7 @@ public class GT_LanguageManager {
             BUFFERMAP = new HashMap<>();
 
     public static Configuration sEnglishFile;
+    public static boolean sUseEnglishFile = false;
     //TODO implement 03f6c9e
 
     public static String addStringLocalization(String aKey, String aEnglish) {
@@ -39,7 +40,10 @@ public class GT_LanguageManager {
             return E;
         if (aWriteIntoLangFile)
             aEnglish = writeToLangFile(aKey, aEnglish);
-        LOCALIZATION.put(aKey, aEnglish);
+        LOCALIZATION.putIfAbsent(aKey, aEnglish);
+        if(sUseEnglishFile && !aWriteIntoLangFile && LOCALIZATION.containsKey(aKey)){
+        	aEnglish = LOCALIZATION.get(aKey);
+        }
         return aEnglish;
     }
 
@@ -57,8 +61,10 @@ public class GT_LanguageManager {
             }
             Property tProperty = sEnglishFile.get("LanguageFile", aKey.trim(), aEnglish);
             if (!tProperty.wasRead() && GregTech_API.sPostloadFinished) sEnglishFile.save();
-            if (sEnglishFile.get("EnableLangFile", "UseThisFileAsLanguageFile", false).getBoolean(false))
+            if (sEnglishFile.get("EnableLangFile", "UseThisFileAsLanguageFile", false).getBoolean(false)){
                 aEnglish = tProperty.getString();
+                sUseEnglishFile = true;
+            }
         }
         return aEnglish;
     }
